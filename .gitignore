@@ -1,0 +1,29 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+
+# Python / tooling
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local research and generated media
+_research/
+outputs/
+generated/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.mp4
+*.mov
+
+# Local secrets
+.env
+.env.*
