@@ -1,6 +1,6 @@
 ---
 name: script-visual-asset-compiler
-description: Extract production-ready visual asset plans from scripts, outlines, novels, director breakdowns, or storyboards. Use when Codex needs to turn 剧本, 导演拆解, 分镜, 角色, 服装, 场景, 关键道具, 生图提示词, scene continuity, same-location multi-angle images, doorway/interior/exterior scene plates, concept art, reference-image planning, or AI image asset requests into structured characters, costumes, scenes, props, scene-view prompts, and clean image-generation prompts; also use when the user asks to generate the corresponding character, scene, or prop images.
+description: Extract production-ready visual asset plans and cinematic image prompts from scripts, outlines, novels, director breakdowns, or storyboards. Use when Codex needs to turn 剧本, 导演拆解, 分镜, 角色, 服装, 场景, 关键道具, 生图提示词, scene continuity, same-location multi-angle images, doorway/interior/exterior scene plates, cinematic LOOK cards, LOOK transfer, prestige-film still prompts, concept art, reference-image planning, or AI image asset requests into structured characters, costumes, scenes, props, scene-view prompts, shot-frame prompts, and clean image-generation prompts; also use when the user asks to generate the corresponding character, scene, prop, or cinematic frame images.
 ---
 
 # 剧本资产提取器
@@ -10,12 +10,26 @@ description: Extract production-ready visual asset plans from scripts, outlines,
 Turn a script into a reusable visual asset package. The user-facing skill name is `剧本资产提取器`; keep the technical skill ID as `$script-visual-asset-compiler` for Codex invocation compatibility.
 
 ```text
-Script -> Director breakdown -> Continuity memory graph -> Key subjects -> Image asset prompts -> Optional image generation
+Script -> Director breakdown -> Continuity memory graph -> Key subjects -> Cinematic LOOK layer -> Image asset prompts -> Optional image generation
 ```
 
-The default final output is Chinese, production-oriented, and ready for image generation. Do not only summarize the plot. Extract a stable visual system that can generate consistent character, costume, scene, and prop images across later storyboard or video work.
+The default final output is Chinese, production-oriented, and ready for image generation. Do not only summarize the plot. Extract a stable visual system that can generate consistent character, costume, scene, prop, and optional cinematic frame images across later storyboard or video work.
 
 If `$cinematic-video-prompt-compiler` is available and the user also wants full cinematic shot prompts, use it as the companion skill after this asset extraction. Do not depend on it for the core asset inventory.
+
+## Reference Files
+
+Read only the files needed for the current task:
+
+| File | Read when |
+|------|-----------|
+| `references/cinematic/integration-rules.md` | When applying cinematic quality to extracted assets, deciding asset-safe vs full cinematic treatment, or resolving conflicts between clean reference assets and dramatic frames. |
+| `references/cinematic/look-card-and-transfer.md` | When the user asks for LOOK CARD, LOOK transfer, style variants, named looks, or cinematic still frames. |
+| `references/cinematic/presets-reference.md` | When a known style, film, show, DP-style, preset name, or "像...风格" request is named. |
+| `references/cinematic/params-reference.md` | When assembling any cinematic prompt layer. |
+| `references/cinematic/recipes-reference.md` | When the style request is fuzzy and no exact preset is available. |
+| `references/cinematic/anti-slop-system.md` | When adding realism, anti-slop, or model-aware negative/positive constraints. |
+| `references/cinematic/model-adapters.md` | When the user names GPT Image, Midjourney, Flux, SDXL, or another still-image model. |
 
 ## Input Handling
 
@@ -38,7 +52,8 @@ Keep four layers separate:
 1. `Base Truth`: script facts, confirmed references, user constraints, and stable asset IDs.
 2. `Continuity Context`: adjacent scenes, recurring locations, portals, screen direction, style lock, previous generated assets, and reference-image roles.
 3. `Derived Prompts`: per-asset and per-view image prompts derived from Base Truth plus Continuity Context.
-4. `Submission Payload`: the final concise prompt and selected reference images sent to an image generator.
+4. `Cinematic LOOK Layer`: optional camera, lens, light, color, texture, mood, realism, and anti-slop treatment. It can enrich prompts but never override Base Truth.
+5. `Submission Payload`: the final concise prompt and selected reference images sent to an image generator.
 
 Do not let generated images silently rewrite Base Truth. If a generated asset contradicts the script, mark it as a candidate that needs acceptance, revision, or rejection.
 
@@ -65,8 +80,15 @@ Do not let generated images silently rewrite Base Truth. If a generated asset co
    - `SCN-01` canonical scenes / locations / location states
    - `SCN-01_VIEW-01_PRIMARY` / `SCN-01_VIEW-02_REVERSE` derived scene views from the same canonical scene
    - `PRP-01` plot props, weapons, tokens, letters, devices, vehicles, artifacts, repeated objects, or visually iconic objects
-6. Write image-generation prompts for each subject. Each prompt must be usable without reading the whole script.
-7. If the user asks to generate images, generate in dependency order: character identity/costume first, scene master plates before derived scene views, props before shots that depend on them.
+   - `SHOT-01_FRAME-01` cinematic keyframes only when the user requests frames with characters, posters, or storyboard stills
+6. Decide the cinematic treatment:
+   - clean asset reference only
+   - scene plate with cinematic LOOK
+   - full cinematic frame prompt
+   - LOOK CARD first because the style request is fuzzy
+   - LOOK transfer from a named preset/style
+7. Write image-generation prompts for each subject. Each prompt must be usable without reading the whole script.
+8. If the user asks to generate images, generate in dependency order: character identity/costume first, scene master plates before derived scene views, props before shots that depend on them.
 
 ## Extraction Rules
 
@@ -90,6 +112,23 @@ Props:
 - Include invitation letters, weapons, heirlooms, tokens, phones, contracts, medicine, jewelry, masks, devices, vehicles, ritual objects, special containers, and clue objects.
 - Describe scale, material, color, wear, marks, inscriptions, damage, mechanism, and the prop's story function.
 - Do not include generic furniture or background clutter unless it becomes important in action, blocking, recognition, or spatial continuity.
+
+## Cinematic Treatment Rules
+
+Cinematic style is a derived prompt layer. It must improve image quality without corrupting asset extraction.
+
+Use `references/cinematic/integration-rules.md` when deciding how much cinematic treatment to apply. In short:
+
+- Character and costume reference assets stay on a clean solid-color background. Add realistic skin, hair, textile, material, and optical clarity, but do not add film sets, smoke, random foreground, dramatic action, or lens flare.
+- Prop reference assets stay on a clean solid-color background. Add material fidelity, wear, construction details, and scale logic, but do not add hands or scene environments.
+- Scene assets can use full cinematic LOOK treatment because they are environment plates. They must still be empty, geographically readable, and consistent across derived views.
+- Shot frames can use the full cinematic still-image layer only when the user requests character-containing frames, posters, keyframes, or storyboard images. Label them as `SHOT-*`, not `SCN-*`.
+
+When the user names a style, preset, film, show, DP-style, or says "像...风格", read `references/cinematic/presets-reference.md` and transfer the LOOK layer only. Preserve script facts, asset IDs, clean-background requirements, no-people scene plates, and spatial continuity.
+
+When the user gives a fuzzy style request, read `references/cinematic/recipes-reference.md` and `references/cinematic/look-card-and-transfer.md`. Output a LOOK CARD first unless the user explicitly asks to proceed automatically.
+
+When assembling cinematic prompts, read `references/cinematic/params-reference.md`, `references/cinematic/anti-slop-system.md`, and `references/cinematic/model-adapters.md` as needed. Use anti-slop as a compact, subject-aware clause, not a long generic negative prompt.
 
 ## Scene Continuity and Multi-View Rules
 
@@ -178,6 +217,12 @@ Use this structure by default:
 - 空间/门槛/路径:
 - 风格锁:
 
+## 电影感风格层
+- 风格来源: named preset / custom LOOK CARD / script-inferred
+- LOOK 锁定: camera, lens, light, palette, texture, mood
+- 适用边界: CHR/CST clean asset / SCN cinematic plate / PRP clean asset / SHOT cinematic frame
+- 模型适配: GPT Image / Midjourney / Flux / SDXL / unspecified
+
 ## 角色资产
 ### CHR-01 角色名
 - 角色功能:
@@ -211,6 +256,15 @@ Use this structure by default:
 - 生图提示词:
   - 45°侧视图:
   - 背视图:
+
+## 分镜帧资产（仅当用户需要带人物画面）
+### SHOT-01_FRAME-01 帧名
+- 剧情功能:
+- 引用资产: CHR / CST / SCN / PRP
+- 视觉中心:
+- 电影感 LOOK:
+- 连续性要点:
+- 生图提示词:
 
 ## 缺口与假设
 - ...
@@ -248,6 +302,7 @@ Scene asset prompts must include:
 - clear readable geography: foreground, midground, background, entrances, exits, portals, key set pieces, fixed landmarks
 - lighting source, time of day, weather, material reaction, and color palette
 - for derived views, explicit inherited anchors from the master plate and what changes in camera position
+- the selected LOOK layer when the user asks for cinematic quality or a style has been inferred
 - no text labels, no UI, no watermark
 
 Prop asset prompts must include:
@@ -257,6 +312,14 @@ Prop asset prompts must include:
 - `背视图` prompt showing rear construction and continuity marks
 - material, scale, wear, mechanism, unique marks, and story-use details
 - no hands unless the user asks for scale reference; no text labels, no watermark
+
+Shot-frame prompts must include:
+
+- `SHOT-*` ID and the referenced `CHR-*`, `CST-*`, `SCN-*`, and `PRP-*` IDs
+- one clear visual center when multiple characters or objects appear
+- scene moment, framing, foreground depth if needed, camera/lens, lighting, color/texture, mood, realism, and anti-slop
+- continuity inheritance from the scene master and character/prop assets
+- no contradiction with clean reference assets; a dramatic frame does not replace CHR/SCN/PRP asset truth
 
 Use concise negative constraints at the end:
 
@@ -309,9 +372,14 @@ Before finalizing, verify:
 - Scene plates and character-containing shot frames are not mixed under the same `SCN-*` asset.
 - Every plot-driving or repeated prop is included.
 - Characters, costumes, scenes, scene views, and props have stable IDs and cross-reference the storyboard map.
+- Cinematic LOOK choices are treated as derived prompt layers, not script facts.
 - Character prompts include front view, back view, and headshot.
 - Scene prompts are no-people location plates; master and derived views do not contradict each other.
 - Prop prompts include 45° side view and back view.
+- Shot-frame prompts, when requested, are labeled as `SHOT-*` and reference existing CHR/CST/SCN/PRP IDs.
+- Clean character and prop reference prompts are not polluted by cinematic background action, random foreground objects, or dramatic scene lighting.
+- Fuzzy cinematic style requests produce a LOOK CARD first unless the user explicitly asks to proceed automatically.
+- Named-look transfer preserves the user's script facts and only transfers camera, lens, light, color, texture, mood, and anti-slop behavior.
 - Prompts are clean, literal, and image-generation ready, not vague mood labels.
 - Reference-image roles and conflicts are explicit when references exist.
 - Guidance is prioritized, not bloated: preserve at most the highest-impact continuity constraints inside each final prompt.
