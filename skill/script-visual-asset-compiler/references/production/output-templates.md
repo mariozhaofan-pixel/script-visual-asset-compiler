@@ -1,6 +1,8 @@
-# 输出模板
+# Output Templates
 
-## 默认完整资产包
+Use this file when the user asks for a full asset package, prompt-only output, industrial prompt documents, canvas blueprints, or generation manifests.
+
+## Full Asset Package
 
 ```text
 ## 导演拆解
@@ -22,7 +24,6 @@
 - 道具:
 - 载具:
 - 色卡/材质DNA:
-- 背景演员组:
 - 空间/门槛/路径:
 - 风格锁:
 
@@ -34,6 +35,12 @@
 - lighting:
 - style_constraints:
 - qa_focus:
+
+## 电影感风格层
+- 风格来源:
+- LOOK 锁定:
+- 适用边界:
+- 模型适配:
 
 ## 角色资产
 ### CHR-01 角色名
@@ -53,11 +60,6 @@
 - 场景连续性卡:
 - 必需视角:
 - 生图提示词:
-  - SCN-01_MASTER 全景无人物:
-  - SCN-01_VIEW-01_PRIMARY 主剧情视角:
-  - SCN-01_VIEW-02_REVERSE 反向视角:
-  - SCN-01_VIEW-03_INSIDE_TO_OUT 门内看门外:
-  - SCN-01_VIEW-04_OUTSIDE_TO_IN 门外看门内:
 
 ## 关键道具资产
 ### PRP-01 道具名
@@ -94,10 +96,13 @@
 - 禁止漂移:
 - 生图提示词或文本规范:
 
-## 镜头帧资产（仅当用户需要带人物画面）
-### SHOT-01_FRAME-01
+## 分镜帧资产（仅当用户需要带人物画面）
+### SHOT-01_FRAME-01 帧名
+- 剧情功能:
 - 引用资产:
-- 画面职责:
+- 视觉中心:
+- 电影感 LOOK:
+- 连续性要点:
 - 生图提示词:
 
 ## 工业化提示词文档（用户需要节点/文件时）
@@ -107,8 +112,8 @@
 - 跑歪兜底加强:
 - 版本:
 
-## Canvas Blueprint（仅当用户需要画布/节点）
-- mode: prompt_only / blueprint_only
+## Canvas Blueprint（仅当用户需要画布/节点/CLI）
+- mode:
 - canvas_tool:
 - sections:
 - node_index:
@@ -116,94 +121,40 @@
 
 ## 缺口与假设
 - ...
-
-## 质量检查摘要
-- ...
 ```
 
-## 提示词-only 模式
+## Prompt-Only Output
 
 ```text
 ## 生图提示词
 
 ### CHR-01 / CST-01 角色名 - 服装状态
-- 正视图: ...
-- 背视图: ...
-- 大头照: ...
+- 正视图:
+- 背视图:
+- 大头照:
 
 ### SCN-01 场景名
-- SCN-01_MASTER: ...
-- SCN-01_VIEW-03_INSIDE_TO_OUT: ...
-- SCN-01_VIEW-04_OUTSIDE_TO_IN: ...
+- SCN-01_MASTER:
+- SCN-01_VIEW-xx:
 
 ### PRP-01 道具名
-- 45°侧视图: ...
-- 背视图: ...
+- 45°侧视图:
+- 背视图:
 
 ### CRE-01 生物/怪兽名
-- 多视图设定: ...
+- 多视图设定:
 
 ### VEH-01 载具名
-- 多视图设定: ...
+- 多视图设定:
 
 ### DNA-01 视觉DNA
-- 色卡/材质/灯光规范: ...
+- 色卡/材质/灯光规范:
 
 ## 假设
 - ...
 ```
 
-## 场景-only 模式
-
-```text
-## 场景资产
-
-### SCN-01 场景名
-- 剧情功能:
-- 空间母版:
-- 场景连续性卡:
-  - 空间母版:
-  - 平面关系:
-  - 固定锚点:
-  - 门槛/连接点:
-  - 光线逻辑:
-  - 风格锁:
-  - 视角树:
-- 必需视角:
-  - SCN-01_MASTER:
-  - SCN-01_VIEW-01_PRIMARY:
-  - SCN-01_VIEW-03_INSIDE_TO_OUT:
-  - SCN-01_VIEW-04_OUTSIDE_TO_IN:
-- 生图提示词:
-```
-
-## 生成计划模式
-
-```text
-## 生成顺序
-1. CHR-01 / CST-01
-2. SCN-01_MASTER
-3. SCN-01_VIEW-xx
-4. PRP-01
-5. CRE-01 / VEH-01
-6. STB-01 / SHOT-xx_FRAME-xx
-7. VID-01
-
-## 文件命名建议
-| ID | 视图 | 文件名 |
-
-## 参考图依赖
-| 目标图 | 应使用参考图 | 参考图只控制什么 |
-
-## 复查点
-- 身份是否漂移:
-- 服装是否一致:
-- 场景锚点是否漂移:
-- 门内/门外是否自然衔接:
-- 道具标记是否一致:
-```
-
-## Manifest 模板
+## Generation Manifest
 
 ```text
 | Asset ID | 类型 | 名称 | 视图 | 文件名/结果 | 备注 |

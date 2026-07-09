@@ -1,6 +1,6 @@
 ---
 name: script-visual-asset-compiler
-description: Extract production-ready visual asset plans and cinematic image prompts from scripts, outlines, novels, director breakdowns, or storyboards. Use when Codex needs to turn 剧本, 导演拆解, 分镜, 角色, 服装, 场景, 关键道具, 生图提示词, scene continuity, same-location multi-angle images, doorway/interior/exterior scene plates, cinematic LOOK cards, LOOK transfer, prestige-film still prompts, concept art, reference-image planning, or AI image asset requests into structured characters, costumes, scenes, props, scene-view prompts, shot-frame prompts, and clean image-generation prompts; also use when the user asks to generate the corresponding character, scene, prop, or cinematic frame images.
+description: Extract production-ready visual asset plans, prompt documents, cinematic image prompts, and optional canvas CLI blueprints from scripts, outlines, novels, director breakdowns, or storyboards. Use when Codex needs to turn 剧本, 导演拆解, 分镜, 角色, 服装, 场景, 怪兽/生物, 载具, 色卡/视觉DNA, 关键道具, 生图提示词, 工业化提示词文档, scene continuity, same-location multi-angle images, doorway/interior/exterior scene plates, cinematic LOOK cards, LOOK transfer, canvas node planning, LibTV/小云雀/updream/neowow or generic CLI canvas workflows, concept art, reference-image planning, or AI image asset requests into structured characters, costumes, scenes, props, creatures, vehicles, color/material DNA, storyboards, video segments, scene-view prompts, shot-frame prompts, clean image-generation prompts, and optional canvas node payloads; also use when the user asks to generate the corresponding character, scene, prop, creature, vehicle, storyboard, video, or cinematic frame images.
 ---
 
 # 剧本资产提取器
@@ -10,10 +10,10 @@ description: Extract production-ready visual asset plans and cinematic image pro
 Turn a script into a reusable visual asset package. The user-facing skill name is `剧本资产提取器`; keep the technical skill ID as `$script-visual-asset-compiler` for Codex invocation compatibility.
 
 ```text
-Script -> Director breakdown -> Continuity memory graph -> Key subjects -> Cinematic LOOK layer -> Image asset prompts -> Optional image generation
+Script -> Director breakdown -> Continuity memory graph -> Key subjects -> Prompt documents -> Optional canvas blueprint / CLI node payload -> Optional image generation
 ```
 
-The default final output is Chinese, production-oriented, and ready for image generation. Do not only summarize the plot. Extract a stable visual system that can generate consistent character, costume, scene, prop, and optional cinematic frame images across later storyboard or video work.
+The default final output is Chinese, production-oriented, and ready for image generation. Do not only summarize the plot. Extract a stable visual system that can generate consistent character, costume, scene, prop, creature, vehicle, color/material DNA, storyboard, video-segment, and optional cinematic frame images across later storyboard or video work.
 
 If `$cinematic-video-prompt-compiler` is available and the user also wants full cinematic shot prompts, use it as the companion skill after this asset extraction. Do not depend on it for the core asset inventory.
 
@@ -30,6 +30,10 @@ Read only the files needed for the current task:
 | `references/cinematic/recipes-reference.md` | When the style request is fuzzy and no exact preset is available. |
 | `references/cinematic/anti-slop-system.md` | When adding realism, anti-slop, or model-aware negative/positive constraints. |
 | `references/cinematic/model-adapters.md` | When the user names GPT Image, Midjourney, Flux, SDXL, or another still-image model. |
+| `references/production/asset-taxonomy-and-profiles.md` | When extracting creatures, vehicles, color/material DNA, storyboards, video segments, priorities, project profiles, or broad asset maps. |
+| `references/production/prompt-document-compiler.md` | When the user wants industrial prompt documents, node-ready prompt docs, QA notes, rerun fixes, or versioned prompt packages. |
+| `references/production/output-templates.md` | When the user wants the full default output structure, prompt-only output, generation manifest, or a file-ready package. |
+| `references/canvas/generic-canvas-blueprint.md` | When the user asks for canvas planning, CLI node creation, LibTV, 小云雀, updream, neowow, or any generic infinite-canvas CLI workflow. |
 
 ## Input Handling
 
@@ -53,7 +57,9 @@ Keep four layers separate:
 2. `Continuity Context`: adjacent scenes, recurring locations, portals, screen direction, style lock, previous generated assets, and reference-image roles.
 3. `Derived Prompts`: per-asset and per-view image prompts derived from Base Truth plus Continuity Context.
 4. `Cinematic LOOK Layer`: optional camera, lens, light, color, texture, mood, realism, and anti-slop treatment. It can enrich prompts but never override Base Truth.
-5. `Submission Payload`: the final concise prompt and selected reference images sent to an image generator.
+5. `Production Prompt Document`: optional versioned document containing prompt body, parameters, QA notes, and rerun fixes.
+6. `Canvas Blueprint / CLI Payload`: optional vendor-neutral plan for creating canvas nodes through an already available CLI.
+7. `Submission Payload`: the final concise prompt and selected reference images sent to an image generator.
 
 Do not let generated images silently rewrite Base Truth. If a generated asset contradicts the script, mark it as a candidate that needs acceptance, revision, or rejection.
 
@@ -77,18 +83,29 @@ Do not let generated images silently rewrite Base Truth. If a generated asset co
 5. Extract key subjects into stable IDs:
    - `CHR-01` characters
    - `CST-01` costumes or costume states when one character has multiple looks
+   - `CRE-01` creatures, monsters, animals, mechanical beasts, mounts, mutated life, or non-human entities
    - `SCN-01` canonical scenes / locations / location states
    - `SCN-01_VIEW-01_PRIMARY` / `SCN-01_VIEW-02_REVERSE` derived scene views from the same canonical scene
    - `PRP-01` plot props, weapons, tokens, letters, devices, vehicles, artifacts, repeated objects, or visually iconic objects
+   - `VEH-01` vehicles, ships, cars, aircraft, mecha, bikes, carts, or other transport systems
+   - `DNA-01` color palette, material DNA, lighting DNA, and visual bible assets
+   - `STB-01` storyboard grids or sequence boards
+   - `VID-01` video segment plans only when video prompting is requested
    - `SHOT-01_FRAME-01` cinematic keyframes only when the user requests frames with characters, posters, or storyboard stills
-6. Decide the cinematic treatment:
+6. Decide the output mode:
+   - prompt-only for Codex/GPT chat
+   - production prompt documents
+   - canvas blueprint only
+   - CLI command plan
+   - execute an already available canvas CLI only when explicitly requested
+7. Decide the cinematic treatment:
    - clean asset reference only
    - scene plate with cinematic LOOK
    - full cinematic frame prompt
    - LOOK CARD first because the style request is fuzzy
    - LOOK transfer from a named preset/style
-7. Write image-generation prompts for each subject. Each prompt must be usable without reading the whole script.
-8. If the user asks to generate images, generate in dependency order: character identity/costume first, scene master plates before derived scene views, props before shots that depend on them.
+8. Write image-generation prompts or prompt documents for each subject. Each prompt must be usable without reading the whole script.
+9. If the user asks to generate images or create canvas nodes, execute in dependency order: project profile / DNA, character identity/costume, creatures/vehicles/props, scene master plates, derived scene views, storyboard/keyframes, video segments.
 
 ## Extraction Rules
 
@@ -113,6 +130,14 @@ Props:
 - Describe scale, material, color, wear, marks, inscriptions, damage, mechanism, and the prop's story function.
 - Do not include generic furniture or background clutter unless it becomes important in action, blocking, recognition, or spatial continuity.
 
+Broader production assets:
+
+- Extract `CRE-*` when the script contains monsters, animals, mechanical beasts, mounts, unknown life forms, mutated organisms, or creature-like threats.
+- Extract `VEH-*` when a vehicle or transport system has visual continuity, action importance, world-building value, or generation difficulty.
+- Extract `DNA-*` when a project needs a shared color palette, material system, lighting rule, visual bible, or profile lock before generating multiple assets.
+- Extract `STB-*` when the user needs a storyboard grid, beat board, contact sheet, or sequence-level visual plan.
+- Extract `VID-*` only when the user asks for video prompt planning. Do not start final video generation unless explicitly requested.
+
 ## Cinematic Treatment Rules
 
 Cinematic style is a derived prompt layer. It must improve image quality without corrupting asset extraction.
@@ -129,6 +154,35 @@ When the user names a style, preset, film, show, DP-style, or says "像...风格
 When the user gives a fuzzy style request, read `references/cinematic/recipes-reference.md` and `references/cinematic/look-card-and-transfer.md`. Output a LOOK CARD first unless the user explicitly asks to proceed automatically.
 
 When assembling cinematic prompts, read `references/cinematic/params-reference.md`, `references/cinematic/anti-slop-system.md`, and `references/cinematic/model-adapters.md` as needed. Use anti-slop as a compact, subject-aware clause, not a long generic negative prompt.
+
+## Prompt Document and Canvas Modes
+
+Default to `prompt_only` unless the user asks for a canvas, nodes, CLI execution, or a project board.
+
+Use `references/production/prompt-document-compiler.md` when the user wants structured prompt documents. Keep these layers separate:
+
+- `Prompt Body`: only model-facing image/video prompt text.
+- `Parameters`: aspect ratio, model, quality, reference images, canvas section, node metadata.
+- `Production Notes`: QA checklist, rerun fixes, version suggestions, operator instructions.
+
+Do not put production notes, CLI commands, node metadata, or rerun instructions inside the model prompt body.
+
+Use `references/canvas/generic-canvas-blueprint.md` for canvas workflows. Support these modes:
+
+- `prompt_only`: output asset prompts only.
+- `blueprint_only`: output canvas plan and node content, do not run CLI.
+- `cli_command_plan`: output safe commands or JSON payload plan, do not execute.
+- `execute_cli`: run a detected/provided canvas CLI only when the user explicitly asks to create/update canvas nodes.
+
+Canvas planning must be vendor-neutral. LibTV, 小云雀, updream, neowow, and custom canvas tools are all treated as CLI canvas targets when a usable executable and command syntax are available. Do not hard-code one vendor.
+
+CLI safety:
+
+- Never install a canvas CLI as part of this skill.
+- Never read, print, modify, or write API keys or access tokens.
+- Only check executable existence and help/version output when needed.
+- If CLI syntax is unknown, stop at `cli_command_plan` or ask for the tool's node-creation syntax.
+- If no CLI is available, still return the asset list, prompt documents, and optional canvas blueprint.
 
 ## Scene Continuity and Multi-View Rules
 
@@ -195,82 +249,9 @@ Keep scene plates separate from shot frames:
 
 ## Output Structure
 
-Use this structure by default:
+Use a compact structure by default: director breakdown, storyboard asset map, continuity graph, project profile/DNA, cinematic LOOK layer, assets by type, optional prompt documents, optional Canvas Blueprint, gaps/assumptions, and QA summary.
 
-```text
-## 导演拆解
-- 故事核心:
-- 类型 / 时代 / 世界规则:
-- 视觉基调:
-- 角色关系与视觉对比:
-- 场景逻辑:
-- 道具逻辑:
-
-## 分镜资产地图
-| Beat | 剧情功能 | 角色 | 服装 | 场景/视角 | 关键道具 | 连续性备注 |
-
-## 连续性记忆图谱
-- 角色:
-- 服装:
-- 场景:
-- 道具:
-- 空间/门槛/路径:
-- 风格锁:
-
-## 电影感风格层
-- 风格来源: named preset / custom LOOK CARD / script-inferred
-- LOOK 锁定: camera, lens, light, palette, texture, mood
-- 适用边界: CHR/CST clean asset / SCN cinematic plate / PRP clean asset / SHOT cinematic frame
-- 模型适配: GPT Image / Midjourney / Flux / SDXL / unspecified
-
-## 角色资产
-### CHR-01 角色名
-- 角色功能:
-- 形象锁定:
-- 服装状态:
-- 连续性要点:
-- 生图提示词:
-  - 正视图:
-  - 背视图:
-  - 大头照:
-
-## 场景资产
-### SCN-01 场景名
-- 剧情功能:
-- 空间母版:
-- 场景连续性卡:
-- 必需视角:
-- 生图提示词:
-  - SCN-01_MASTER 全景无人物:
-  - SCN-01_VIEW-01_PRIMARY 主剧情视角:
-  - SCN-01_VIEW-02_REVERSE 反向视角:
-  - SCN-01_VIEW-03_INSIDE_TO_OUT 门内看门外:
-  - SCN-01_VIEW-04_OUTSIDE_TO_IN 门外看门内:
-
-## 关键道具资产
-### PRP-01 道具名
-- 剧情功能:
-- 造型锁定:
-- 材质 / 标记 / 尺寸:
-- 连续性要点:
-- 生图提示词:
-  - 45°侧视图:
-  - 背视图:
-
-## 分镜帧资产（仅当用户需要带人物画面）
-### SHOT-01_FRAME-01 帧名
-- 剧情功能:
-- 引用资产: CHR / CST / SCN / PRP
-- 视觉中心:
-- 电影感 LOOK:
-- 连续性要点:
-- 生图提示词:
-
-## 缺口与假设
-- ...
-```
-
-When the user wants only prompts, omit long analysis but keep asset IDs, scene continuity cards, and prompts. When the user wants a file artifact, save the result as Markdown and include a manifest mapping IDs to generated image filenames.
+When the user wants only prompts, omit long analysis but keep asset IDs, scene continuity cards, and prompts. When the user wants the full template, prompt-only format, or manifest, read `references/production/output-templates.md`. When the user wants a file artifact, save the result as Markdown and include a manifest mapping IDs to generated image filenames.
 
 ## Image Prompt Requirements
 
@@ -313,6 +294,27 @@ Prop asset prompts must include:
 - material, scale, wear, mechanism, unique marks, and story-use details
 - no hands unless the user asks for scale reference; no text labels, no watermark
 
+Creature asset prompts must include:
+
+- species or construction logic
+- side, front, top-down, and 3/4 view when a full design sheet is requested
+- scale, anatomy/mechanical structure, surface material, signature visual memory point, functional story elements
+- same creature across all views; no random species drift
+
+Vehicle asset prompts must include:
+
+- side, front, top, and 3/4 view when a full design sheet is requested
+- silhouette, scale, movement system, cockpit/control interface, materials, decals/customization, damage/weathering
+- same vehicle across all views; no toy-like or generic 3D render drift
+
+Color/material DNA prompts or specs must include:
+
+- color names, functions, and optional hex codes when useful
+- material system
+- lighting DNA
+- inheritance notes for characters, scenes, props, creatures, vehicles, storyboards, and video segments
+- forbidden drift
+
 Shot-frame prompts must include:
 
 - `SHOT-*` ID and the referenced `CHR-*`, `CST-*`, `SCN-*`, and `PRP-*` IDs
@@ -320,6 +322,20 @@ Shot-frame prompts must include:
 - scene moment, framing, foreground depth if needed, camera/lens, lighting, color/texture, mood, realism, and anti-slop
 - continuity inheritance from the scene master and character/prop assets
 - no contradiction with clean reference assets; a dramatic frame does not replace CHR/SCN/PRP asset truth
+
+Storyboard and video prompts must include:
+
+- referenced asset IDs
+- sequence or segment function
+- continuity lock for character, costume, scene, props, and lighting
+- panel list for storyboard grids or timecoded action timeline for video segments
+- no final video generation unless explicitly requested
+
+Canvas node payloads must include:
+
+- node name, node type, asset reference, section, action, generate_now flag, and content source
+- prompt body separated from parameters and QA notes
+- node index table in final response when canvas output is created or planned
 
 Use concise negative constraints at the end:
 
@@ -372,6 +388,7 @@ Before finalizing, verify:
 - Scene plates and character-containing shot frames are not mixed under the same `SCN-*` asset.
 - Every plot-driving or repeated prop is included.
 - Characters, costumes, scenes, scene views, and props have stable IDs and cross-reference the storyboard map.
+- Creatures, vehicles, color/material DNA, storyboard grids, and video segments are included when story-relevant or requested.
 - Cinematic LOOK choices are treated as derived prompt layers, not script facts.
 - Character prompts include front view, back view, and headshot.
 - Scene prompts are no-people location plates; master and derived views do not contradict each other.
@@ -380,6 +397,10 @@ Before finalizing, verify:
 - Clean character and prop reference prompts are not polluted by cinematic background action, random foreground objects, or dramatic scene lighting.
 - Fuzzy cinematic style requests produce a LOOK CARD first unless the user explicitly asks to proceed automatically.
 - Named-look transfer preserves the user's script facts and only transfers camera, lens, light, color, texture, mood, and anti-slop behavior.
+- Industrial prompt documents keep prompt body, parameters, QA notes, and rerun fixes separate.
+- Canvas Blueprint is generated before any CLI node creation.
+- CLI execution is skipped unless the user explicitly requests canvas node creation/update and a safe executable plus command syntax are available.
+- No API keys, access tokens, or credential values are read, printed, modified, or written.
 - Prompts are clean, literal, and image-generation ready, not vague mood labels.
 - Reference-image roles and conflicts are explicit when references exist.
 - Guidance is prioritized, not bloated: preserve at most the highest-impact continuity constraints inside each final prompt.

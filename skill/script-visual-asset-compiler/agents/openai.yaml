@@ -1,4 +1,4 @@
 interface:
   display_name: "剧本资产提取器"
-  short_description: "从剧本提取角色、场景多视角、道具、电影感LOOK和生图提示词。"
-  default_prompt: "使用 $script-visual-asset-compiler（剧本资产提取器）把这份剧本拆成角色、场景多视角、关键道具、电影感LOOK和可生成图片资产的提示词。"
+  short_description: "从剧本拆解资产、编译提示词文档，并规划通用CLI画布。"
+  default_prompt: "使用 $script-visual-asset-compiler（剧本资产提取器）把这份剧本拆成角色、场景、道具、生物、载具、视觉DNA、分镜资产，编译可生成图片/视频的提示词；如果需要画布，再生成通用Canvas Blueprint和CLI节点计划。"

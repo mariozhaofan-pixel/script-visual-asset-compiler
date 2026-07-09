@@ -1,8 +1,8 @@
 # 剧本资产提取器 / Script Visual Asset Compiler
 
-`剧本资产提取器` 是一个面向影视、短剧、漫画、AI 视频和概念设计工作流的视觉资产提取系统。它把用户提供的剧本、故事梗概、导演拆解、分镜或混合资料，整理为可复用的角色、服装、场景、关键道具、电影感 LOOK 和生图提示词。
+`剧本资产提取器` 是一个面向影视、短剧、漫画、AI 视频和概念设计工作流的视觉资产提取系统。它把用户提供的剧本、故事梗概、导演拆解、分镜或混合资料，整理为可复用的角色、服装、场景、关键道具、生物/怪兽、载具、色卡/视觉DNA、电影感 LOOK、工业化提示词文档和通用画布蓝图。
 
-English summary: this repository contains a Codex Skill and GPT Builder knowledge-base versions for extracting production-ready visual asset plans and cinematic image prompts from scripts.
+English summary: this repository contains a Codex Skill and GPT Builder knowledge-base versions for extracting production-ready visual asset plans, prompt documents, cinematic image prompts, and optional canvas blueprints from scripts.
 
 ## 能力范围
 
@@ -11,8 +11,11 @@ English summary: this repository contains a Codex Skill and GPT Builder knowledg
 - 为场景输出无人全景母版，并在剧情需要时输出同一空间的多角度视图。
 - 处理门内 / 门外、走廊 / 房间、正反打、路径和阈值空间的连续性。
 - 为关键道具输出纯色背景、45 度侧视图和背视图提示词。
+- 支持生物/怪兽、载具、色卡/材质DNA、分镜网格和视频段落计划。
+- 支持工业化提示词文档：Prompt Body、参数建议、实操注意、跑歪兜底加强分层。
 - 支持电影感 LOOK、LOOK CARD、LOOK 迁移、场景空镜和带人物分镜帧提示词。
 - 支持 GPT Image、Midjourney、Flux、SDXL 等生图模型的轻量适配。
+- Codex Skill 可规划通用 Canvas Blueprint，并在用户明确要求且本地已有安全 CLI 时创建节点；GPT 版本只输出通用画布蓝图，不输出 CLI 命令计划。
 - 保持稳定资产 ID，便于后续分镜、视频提示词和图片资产管理。
 
 ## 仓库内容
@@ -22,6 +25,8 @@ skill/script-visual-asset-compiler/
   SKILL.md                  Codex Skill 主规则
   agents/openai.yaml        Skill 展示名和默认提示
   references/cinematic/     电影感 LOOK、参数、preset、防廉价和模型适配规则
+  references/production/    资产分类、Project Profile、工业化提示词文档规则
+  references/canvas/        通用 Canvas Blueprint 与 Codex CLI 执行安全规则
 
 gpt/knowledge/
   00_GPT创建配置.md
@@ -79,7 +84,8 @@ Copy-Item -Recurse -Force `
 - 不只总结剧情，而是建立可复用视觉资产系统。
 - 场景资产必须是无人环境图，角色出现在镜头画面时应另建 `SHOT-*` 或分镜帧，不混入 `SCN-*` 场景资产。
 - 电影感 LOOK 是派生层，不改写剧本事实、资产 ID 或空间连续性。
-- 生成图片时建议按依赖顺序：角色 / 服装、场景母版、场景衍生视角、道具、分镜帧。
+- GPT 版本只输出提示词、提示词文档和通用画布蓝图，不输出 CLI 命令计划。
+- 生成图片时建议按依赖顺序：视觉DNA、角色 / 服装、生物 / 载具、场景母版、场景衍生视角、道具、分镜帧、视频段落。
 
 ## License
 
