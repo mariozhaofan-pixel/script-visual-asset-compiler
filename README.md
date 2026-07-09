@@ -85,6 +85,7 @@ Copy-Item -Recurse -Force `
 - 场景资产必须是无人环境图，角色出现在镜头画面时应另建 `SHOT-*` 或分镜帧，不混入 `SCN-*` 场景资产。
 - 电影感 LOOK 是派生层，不改写剧本事实、资产 ID 或空间连续性。
 - GPT 版本只输出提示词、提示词文档和通用画布蓝图，不输出 CLI 命令计划。
+- Codex 本地环境需要实际生成图片时，可按规则调用已有 `image_gen.py`，默认使用 `gpt-image-2`、`2160x3840`、`high`、`png`，并输出到 `output/imagegen/<asset_id>_<view>.png`。
 - 生成图片时建议按依赖顺序：视觉DNA、角色 / 服装、生物 / 载具、场景母版、场景衍生视角、道具、分镜帧、视频段落。
 
 ## License

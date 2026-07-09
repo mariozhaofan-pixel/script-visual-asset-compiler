@@ -32,6 +32,7 @@ Read only the files needed for the current task:
 | `references/cinematic/model-adapters.md` | When the user names GPT Image, Midjourney, Flux, SDXL, or another still-image model. |
 | `references/production/asset-taxonomy-and-profiles.md` | When extracting creatures, vehicles, color/material DNA, storyboards, video segments, priorities, project profiles, or broad asset maps. |
 | `references/production/prompt-document-compiler.md` | When the user wants industrial prompt documents, node-ready prompt docs, QA notes, rerun fixes, or versioned prompt packages. |
+| `references/production/codex-image-generation.md` | When running local Codex image generation from compiled prompts, especially with `image_gen.py`, `gpt-image-2`, 4K PNG output, or ID-mapped image files. |
 | `references/production/output-templates.md` | When the user wants the full default output structure, prompt-only output, generation manifest, or a file-ready package. |
 | `references/canvas/generic-canvas-blueprint.md` | When the user asks for canvas planning, CLI node creation, LibTV, 小云雀, updream, neowow, or any generic infinite-canvas CLI workflow. |
 
@@ -368,14 +369,17 @@ If the user asks to generate images:
 
 1. Confirm the requested scope only when the count is unclear or excessive.
 2. Generate separate images for each required view.
-3. Use dependency order:
+3. In Codex/local execution contexts, read `references/production/codex-image-generation.md` when the user asks for actual files, 4K output, `gpt-image-2`, or `image_gen.py`.
+4. For Codex 4K portrait PNG generation with an available `image_gen.py`, default to model `gpt-image-2`, size `2160x3840`, quality `high`, output format `png`, and ID-based output paths under `output/imagegen/`.
+5. Do not add Codex image-generation commands to GPT Builder behavior. GPT versions should output asset prompts, prompt documents, and optional canvas blueprints, not local execution commands.
+6. Use dependency order:
    - character identity and costume plates
    - `SCN-xx_MASTER` scene master plate
    - derived scene views using the master as reference when possible
    - prop views
-4. Keep each generated image mapped to its ID and view name, for example `CHR-01_front`, `CHR-01_back`, `CHR-01_head`, `SCN-01_MASTER`, `SCN-01_VIEW-03_INSIDE_TO_OUT`, `SCN-01_VIEW-04_OUTSIDE_TO_IN`, `PRP-01_45deg`, `PRP-01_back`.
-5. If an image-generation tool supports reference images, use character references for identity only, costume references for clothing only, scene references for environment/geometry only, and prop references for object form only.
-6. After generation, report the output paths or visible images with the ID map.
+7. Keep each generated image mapped to its ID and view name, for example `CHR-01_front`, `CHR-01_back`, `CHR-01_head`, `SCN-01_MASTER`, `SCN-01_VIEW-03_INSIDE_TO_OUT`, `SCN-01_VIEW-04_OUTSIDE_TO_IN`, `PRP-01_45deg`, `PRP-01_back`.
+8. If an image-generation tool supports reference images, use character references for identity only, costume references for clothing only, scene references for environment/geometry only, and prop references for object form only.
+9. After generation, report the output paths or visible images with the ID map.
 
 ## Quality Gate
 
