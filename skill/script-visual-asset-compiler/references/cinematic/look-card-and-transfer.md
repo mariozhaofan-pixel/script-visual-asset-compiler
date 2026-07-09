@@ -4,6 +4,8 @@ Use this file for fuzzy style requests, named-look transfer, and cinematic varia
 
 ## Request Routes
 
+When the user asks for stronger stylization, 真人电影, 影视风格, 玄幻低饱和, zodiac/MBTI visualization, or says the result is not stylized enough, load `style-amplification.md` before assembling final prompts.
+
 ### Exact Preset
 
 If the user names a known preset, show, film, DP-style, or exact look from `presets-reference.md`:
@@ -30,6 +32,8 @@ CAMERA_KIT   <id>（名称） — <选择原因>
 LIGHT_RECIPE <id>（名称） — <选择原因>
 COLOR_GRADE  <id>（名称） — <选择原因>
 MOOD         <mood>      — <选择原因>
+STYLE_STRENGTH <base/elevated/signature> — <选择原因>
+VISUAL MOTIFS <3-5 recurring motifs, no readable text>
 适用资产     <SCN/SHOT/CHR/PRP 使用边界>
 --------------------------------
 确认后我会把该 LOOK 应用到资产提示词；也可以调整任一类。
@@ -69,7 +73,7 @@ L9 [ANTI-SLOP] Tier A + one Tier B clause, adapted to target model.
 L10 [MODEL NOTE] Optional model-specific note.
 ```
 
-For SCN assets, omit acting and keep the environment empty. For CHR/CST/PRP assets, do not use the full SHOT layer order; use only asset-safe realism and anti-slop.
+For SCN assets, omit acting and keep the environment empty. For default CHR/CST/PRP reference plates, use only asset-safe realism and anti-slop. For cinematic casting plates requested by the user, use `style-amplification.md`: keep single-subject/full-view constraints, but allow live-action film medium anchors, practical costume/set language, cinematic palette, lighting, and visible project motifs.
 
 ## Subject Priority
 

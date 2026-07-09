@@ -1,6 +1,6 @@
 ---
 name: script-visual-asset-compiler
-description: Extract production-ready visual asset plans, prompt documents, cinematic image prompts, and optional canvas CLI blueprints from scripts, outlines, novels, director breakdowns, or storyboards. Use when Codex needs to turn 剧本, 导演拆解, 分镜, 角色, 服装, 场景, 怪兽/生物, 载具, 色卡/视觉DNA, 关键道具, 生图提示词, 工业化提示词文档, scene continuity, same-location multi-angle images, doorway/interior/exterior scene plates, cinematic LOOK cards, LOOK transfer, canvas node planning, LibTV/小云雀/updream/neowow or generic CLI canvas workflows, concept art, reference-image planning, or AI image asset requests into structured characters, costumes, scenes, props, creatures, vehicles, color/material DNA, storyboards, video segments, scene-view prompts, shot-frame prompts, clean image-generation prompts, and optional canvas node payloads; also use when the user asks to generate the corresponding character, scene, prop, creature, vehicle, storyboard, video, or cinematic frame images.
+description: Extract production-ready visual asset plans, prompt documents, cinematic image prompts, style-amplified prompts, and optional canvas blueprints from scripts, outlines, novels, director breakdowns, or storyboards. Use when Codex needs to turn 剧本, 导演拆解, 分镜, 角色, 服装, 场景, 怪兽/生物, 载具, 色卡/视觉DNA, 关键道具, 生图提示词, 工业化提示词文档, scene continuity, same-location multi-angle images, doorway/interior/exterior scene plates, cinematic LOOK cards, LOOK transfer, 真人电影, 影视风格, 玄幻低饱和, zodiac/MBTI visual systems, style not obvious enough, canvas workflows, concept art, reference-image planning, or AI image asset requests into structured assets, scene-view prompts, shot-frame prompts, cinematic casting plates, clean image-generation prompts, and optional canvas node payloads.
 ---
 
 # 剧本资产提取器
@@ -24,6 +24,7 @@ Read only the files needed for the current task:
 | File | Read when |
 |------|-----------|
 | `references/cinematic/integration-rules.md` | When applying cinematic quality to extracted assets, deciding asset-safe vs full cinematic treatment, or resolving conflicts between clean reference assets and dramatic frames. |
+| `references/cinematic/style-amplification.md` | When the user asks for stronger stylization, live-action film stills, 真人电影, 影视风格, 玄幻低饱和, style not obvious enough, character casting plates, or visualized systems such as zodiac / MBTI. |
 | `references/cinematic/look-card-and-transfer.md` | When the user asks for LOOK CARD, LOOK transfer, style variants, named looks, or cinematic still frames. |
 | `references/cinematic/presets-reference.md` | When a known style, film, show, DP-style, preset name, or "像...风格" request is named. |
 | `references/cinematic/params-reference.md` | When assembling any cinematic prompt layer. |
@@ -101,6 +102,7 @@ Do not let generated images silently rewrite Base Truth. If a generated asset co
    - execute an already available canvas CLI only when explicitly requested
 7. Decide the cinematic treatment:
    - clean asset reference only
+   - cinematic casting plate / 真人电影定妆照 when the user wants styled full-body character images
    - scene plate with cinematic LOOK
    - full cinematic frame prompt
    - LOOK CARD first because the style request is fuzzy
@@ -145,10 +147,15 @@ Cinematic style is a derived prompt layer. It must improve image quality without
 
 Use `references/cinematic/integration-rules.md` when deciding how much cinematic treatment to apply. In short:
 
-- Character and costume reference assets stay on a clean solid-color background. Add realistic skin, hair, textile, material, and optical clarity, but do not add film sets, smoke, random foreground, dramatic action, or lens flare.
+- Character and costume reference assets stay on a clean solid-color background by default. Add realistic skin, hair, textile, material, and optical clarity, but do not add film sets, smoke, random foreground, dramatic action, or lens flare.
+- If the user asks for 真人电影, 影视风格, 风格化, 定妆照, 正面全身图, or says the character image is not stylized enough, read `references/cinematic/style-amplification.md` and compile a cinematic casting plate instead of a plain reference sheet.
 - Prop reference assets stay on a clean solid-color background. Add material fidelity, wear, construction details, and scale logic, but do not add hands or scene environments.
 - Scene assets can use full cinematic LOOK treatment because they are environment plates. They must still be empty, geographically readable, and consistent across derived views.
 - Shot frames can use the full cinematic still-image layer only when the user requests character-containing frames, posters, keyframes, or storyboard images. Label them as `SHOT-*`, not `SCN-*`.
+
+When a generated result feels like concept art, game CG, generic fantasy, or weakly styled output, treat it as a prompt defect. Strengthen the next prompt with `style_strength`, concrete visual DNA, live-action medium anchors, practical set/costume/material language, and explicit exclusions for illustration, anime, game render, and plastic CGI.
+
+When the script contains abstract systems such as zodiac, MBTI, personality panels, reputation scores, divine rank lists, or social-media heat, convert them into visual grammar: geometry, costume construction, light behavior, spatial motifs, symbols without readable text, material patterns, and composition. Do not leave them as labels.
 
 When the user names a style, preset, film, show, DP-style, or says "像...风格", read `references/cinematic/presets-reference.md` and transfer the LOOK layer only. Preserve script facts, asset IDs, clean-background requirements, no-people scene plates, and spatial continuity.
 
@@ -277,6 +284,8 @@ Character asset prompts must include:
 - costume-state ID such as `CST-01` when a character has multiple required looks; create one front/back/head prompt set per required costume state
 - no extra characters, no text, no watermark, no logo
 
+If the user explicitly asks for only one character view, such as "只要正面全身图", output only that requested view and keep the ID/view name stable. If the user asks for 真人电影 / 影视风格, use a cinematic casting plate: single actor, full body, front-facing, low-key plain studio or minimal stage background, practical costume construction, real skin/hair/fabric/metal texture, and visible project visual DNA.
+
 Scene asset prompts must include:
 
 - wide panoramic establishing view for the master plate
@@ -396,6 +405,7 @@ Before finalizing, verify:
 - Cinematic LOOK choices are treated as derived prompt layers, not script facts.
 - Character prompts include front view, back view, and headshot.
 - Scene prompts are no-people location plates; master and derived views do not contradict each other.
+- Style requests are not left as abstract labels: prompts include `style_strength`, live-action or medium anchors, recurring visual motifs, and model-safe exclusions for concept art / game CG when relevant.
 - Prop prompts include 45° side view and back view.
 - Shot-frame prompts, when requested, are labeled as `SHOT-*` and reference existing CHR/CST/SCN/PRP IDs.
 - Clean character and prop reference prompts are not polluted by cinematic background action, random foreground objects, or dramatic scene lighting.

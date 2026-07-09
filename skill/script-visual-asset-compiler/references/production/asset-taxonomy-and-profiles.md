@@ -96,6 +96,21 @@ Use these as starting points, not fixed projects.
 - Colors: candle gold, dark wood, desaturated red, jade green, smoke grey.
 - Avoid: beauty-filter plastic skin, cheap cosplay, over-bright fantasy glow.
 
+### Live-Action Low-Saturation Fantasy
+
+- World: grounded mythic or xianxia fantasy staged as a live-action film / drama, not concept art or game CG.
+- Look: practical sets, real actors, full-scale costumes, desaturated cinematic palette, natural lens behavior, motivated moon/candle/overcast light.
+- Materials: weathered jade, tarnished bronze, dark silk, embroidered gauze, carved wood, wet stone, incense soot, frost, lacquer, worn paper.
+- Colors: cold blue grey, smoke grey, silver white, muted jade, aged gold, ink black, with small cinnabar or ember accents for power/heat.
+- Style carriers: costume seams, halo/aura structure, floor inlays, ceiling star maps, ritual compass geometry, non-readable light waves, symbolic material contrast.
+- Avoid: anime, illustration, game render, plastic CGI, UI screens, readable text, generic fantasy glow, over-bright saturation, cheap cosplay.
+
+### Abstract-System Fantasy
+
+- Use when a script's power system is zodiac, MBTI, reputation heat, divine rank, personality panel, destiny chart, or social-media-like metrics.
+- Convert systems into visual grammar before prompt writing: twelve-segment wheels, 4-by-4 grids, orbiting crystal panes, unmarked masks, fractured aura, star-map floors, mirror pools, signal-like light without readable labels.
+- Forbid text labels, type names, zodiac words, MBTI letters, social-media UI, platform logos, and readable charts inside generated images.
+
 ### Confined Apocalypse Thriller
 
 - World: enclosed space, survival suspense, old devices, dust, emergency light, unknown threat.

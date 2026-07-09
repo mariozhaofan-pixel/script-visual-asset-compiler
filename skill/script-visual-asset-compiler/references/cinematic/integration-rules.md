@@ -1,21 +1,28 @@
 # Cinematic Integration Rules
 
-Use these rules when the user wants cinematic quality, a named look, high-end still-image prompts, model-specific image prompts, or when the extracted asset prompts feel too plain for production use.
+Use these rules when the user wants cinematic quality, a named look, high-end still-image prompts, model-specific image prompts, stronger stylization, live-action film stills, or when extracted asset prompts feel too plain for production use.
+
+Keep the script asset inventory as the source of truth. Cinematic style is a derived layer, never a replacement for asset IDs, identity locks, scene geography, prop continuity, or user-requested views.
 
 ## Asset-Type Routing
 
-Keep the script asset inventory as the source of truth. Cinematic style is a derived layer, never a replacement for asset IDs, identity locks, scene geography, or prop continuity.
-
 ### Characters: CHR / CST
 
-Use cinematic enrichment only as material realism:
+Default route: clean reference plate.
 
 - Keep clean solid-color background.
-- Keep front view, back view, and headshot requirements.
+- Keep front view, back view, and headshot requirements unless the user asks for a subset.
 - Keep neutral pose unless the user asks for acting poses.
 - Add skin, hair, textile, leather, metal, dirt, wetness, damage, and optical clarity anchors.
 - Do not add cinematic sets, foreground objects, dramatic shadows, lens flares, smoke, rain, or story action unless the user asks for a character poster or frame.
-- Use only anti-slop Tier A plus model adaptation. Skip Tier B genre clauses unless the character asset is explicitly a cinematic still.
+- Use only anti-slop Tier A plus model adaptation.
+
+Styled route: cinematic casting plate. Use `style-amplification.md` when the user asks for 真人电影, 影视风格, 定妆照, 角色正面全身图, 风格化, 玄幻, low-saturation fantasy, or says the character output is not stylized enough.
+
+- Keep one character only, the requested view, identity lock, costume lock, and no readable text.
+- Use live-action actor language, practical costume department, real makeup/hair/skin/fabric/metal/jade textures, and a low-key plain studio or minimal stage background.
+- Allow cinematic lighting, palette, subtle ground shadow, and visible project DNA in costume cut, halo, jewelry, embroidery, aura, or material motifs.
+- Do not add story action, fighting poses, crowd, unrelated props, or full scene blocking unless the user asks for `SHOT-*`.
 
 ### Scenes: SCN / SCN_VIEW
 
@@ -27,6 +34,7 @@ Use full cinematic enrichment for empty location plates:
 - Keep all scene plates empty: no characters, no crowds, no silhouettes.
 - Use full anti-slop Tier A + one Tier B bucket + model adaptation.
 - If a derived view changes only camera position, inherit the master scene structure, material, fixed anchors, door/window position, weather, and light direction.
+- When the user asks for 真人电影, 影视风格, 玄幻低饱和, or stronger stylization, use live-action location plate / practical full-scale set language and actively exclude concept art, game environments, digital matte painting, UI panels, and readable glyphs.
 
 ### Props: PRP
 
@@ -58,6 +66,17 @@ A LOOK layer contains:
 
 When using a named preset, load `presets-reference.md` and copy the preset's LOOK values. When no named preset exists, build a custom LOOK from `recipes-reference.md` and `params-reference.md`.
 
+For style-heavy requests, also assign `style_strength` from `style-amplification.md`. `signature` style requires visible style carriers, not just a LOOK CARD or mood adjectives.
+
+## Abstract Visual Systems
+
+When a script contains or the user requests zodiac, MBTI, personality tags, reputation heat, divine ranking, social-media heat, or similar systems, convert the system into visual grammar:
+
+- geometry, wheels, grids, or orbit structures
+- costume seams, embroidery, aura, halo, jewelry, weapon/prop construction, or makeup motifs
+- scene architecture, floor inlays, ceiling star maps, mirror pools, empty chambers, or abstract light behavior
+- no readable labels, type names, UI cards, platform logos, or text charts
+
 ## Assembly Priority
 
 When prompts get too long, preserve this order:
@@ -65,18 +84,20 @@ When prompts get too long, preserve this order:
 1. asset ID and required view
 2. script truth and continuity anchors
 3. character identity / scene spatial anchors / prop form anchors
-4. view-specific camera position
-5. LOOK layer: lighting, palette, material, texture, mood
-6. realism and anti-slop
-7. model notes
+4. view-specific camera position or character view
+5. style_strength and visible style carriers
+6. LOOK layer: lighting, palette, material, texture, mood
+7. realism and anti-slop
+8. model notes
 
-Drop decorative adjectives before dropping spatial anchors, identity locks, or prop construction details.
+Drop decorative adjectives before dropping spatial anchors, identity locks, style carriers, or prop construction details.
 
 ## Conflict Rules
 
-- Clean asset references beat cinematic drama for CHR, CST, and PRP assets.
+- Clean asset references beat cinematic drama for default CHR, CST, and PRP reference plates.
+- User-requested cinematic casting plates beat the default clean reference route while still preserving identity, costume, view, and single-subject constraints.
 - Scene geography beats lens mood for SCN assets.
-- User-specified style beats inferred style, unless it contradicts script truth.
+- User-specified style beats inferred style unless it contradicts script truth.
 - If a preset's default framing conflicts with a scene master or required asset view, keep the asset view and transfer only the LOOK layer.
 - Do not use film grain, haze, halation, bloom, and shallow depth of field all at full strength. Keep at most two strong softening signals.
 
@@ -84,6 +105,7 @@ Drop decorative adjectives before dropping spatial anchors, identity locks, or p
 
 - Read `presets-reference.md` when the user names a look, show, film, DP-style, genre preset, or uses "像...风格".
 - Read `params-reference.md` whenever assembling a cinematic prompt.
-- Read `recipes-reference.md` when the style request is fuzzy and there is no exact preset.
+- Read `recipes-reference.md` when the style request is fuzzy and no exact preset is available.
+- Read `style-amplification.md` when the user asks for stronger style, live-action film, 真人电影, 影视风格, 玄幻低饱和, visual DNA, zodiac/MBTI visualization, or says the result is too concept-art-like or not stylized enough.
 - Read `anti-slop-system.md` whenever adding realism or anti-slop clauses.
 - Read `model-adapters.md` when the user names GPT Image, Midjourney, Flux, SDXL, or another still-image model.
