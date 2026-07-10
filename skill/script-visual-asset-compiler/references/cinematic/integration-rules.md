@@ -29,6 +29,7 @@ Styled route: cinematic casting plate. Use `style-amplification.md` when the use
 Use full cinematic enrichment for empty location plates:
 
 - Build `SCN-xx_MASTER` first as spatial truth.
+- Compile the final prompt body with `scene-shot-prompt-grammar.md`: view type, empty location state, environment, fixed composition, immutable LOOK/style keywords, concise scene limits.
 - Select or infer a LOOK layer from the story genre, time, weather, light source, and user style request.
 - Lock the same LOOK layer across derived views unless the script state changes.
 - Keep all scene plates empty: no characters, no crowds, no silhouettes.
@@ -51,6 +52,7 @@ Use cinematic enrichment as object realism:
 Create SHOT outputs only when the user asks for frames with characters, cinematic stills, keyframes, posters, or storyboard frames.
 
 - Reference existing CHR, CST, SCN, SCN_VIEW, and PRP IDs.
+- Compile the final prompt body with `scene-shot-prompt-grammar.md`: shot type, subject/action, environment, fixed composition, immutable LOOK/style keywords, concise limits.
 - Use complete cinematic assembly: scene, framing, foreground, camera, lighting, color/texture, mood, realism, anti-slop, and model note.
 - Do not relabel a shot frame as a scene asset.
 

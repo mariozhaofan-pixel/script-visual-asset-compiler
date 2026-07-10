@@ -25,6 +25,7 @@ Read only the files needed for the current task:
 |------|-----------|
 | `references/cinematic/integration-rules.md` | When applying cinematic quality to extracted assets, deciding asset-safe vs full cinematic treatment, or resolving conflicts between clean reference assets and dramatic frames. |
 | `references/cinematic/style-amplification.md` | When the user asks for stronger stylization, live-action film stills, 真人电影, 影视风格, 玄幻低饱和, style not obvious enough, character casting plates, or visualized systems such as zodiac / MBTI. |
+| `references/cinematic/scene-shot-prompt-grammar.md` | When compiling stylized scene plates, derived scene views, storyboard frames, cinematic keyframes, or unifying scene / shot prompt format from a prompt-style reference. |
 | `references/cinematic/look-card-and-transfer.md` | When the user asks for LOOK CARD, LOOK transfer, style variants, named looks, or cinematic still frames. |
 | `references/cinematic/presets-reference.md` | When a known style, film, show, DP-style, preset name, or "像...风格" request is named. |
 | `references/cinematic/params-reference.md` | When assembling any cinematic prompt layer. |
@@ -161,7 +162,7 @@ When the user names a style, preset, film, show, DP-style, or says "像...风格
 
 When the user gives a fuzzy style request, read `references/cinematic/recipes-reference.md` and `references/cinematic/look-card-and-transfer.md`. Output a LOOK CARD first unless the user explicitly asks to proceed automatically.
 
-When assembling cinematic prompts, read `references/cinematic/params-reference.md`, `references/cinematic/anti-slop-system.md`, and `references/cinematic/model-adapters.md` as needed. Use anti-slop as a compact, subject-aware clause, not a long generic negative prompt.
+When assembling cinematic scene or shot prompts, read `references/cinematic/scene-shot-prompt-grammar.md` to keep prompt bodies in the unified order: shot/view type, subject/action or empty location state, environment, fixed composition, immutable style keywords, and concise limits. Then read `references/cinematic/params-reference.md`, `references/cinematic/anti-slop-system.md`, and `references/cinematic/model-adapters.md` as needed. Use anti-slop as a compact, subject-aware clause, not a long generic negative prompt.
 
 ## Prompt Document and Canvas Modes
 
@@ -293,6 +294,7 @@ Scene asset prompts must include:
 - clear readable geography: foreground, midground, background, entrances, exits, portals, key set pieces, fixed landmarks
 - lighting source, time of day, weather, material reaction, and color palette
 - for derived views, explicit inherited anchors from the master plate and what changes in camera position
+- the unified scene prompt-body order from `scene-shot-prompt-grammar.md` when the user asks for stylized scene images, cinematic scene plates, or a prompt format reference has been merged
 - the selected LOOK layer when the user asks for cinematic quality or a style has been inferred
 - no text labels, no UI, no watermark
 
@@ -330,6 +332,7 @@ Shot-frame prompts must include:
 - `SHOT-*` ID and the referenced `CHR-*`, `CST-*`, `SCN-*`, and `PRP-*` IDs
 - one clear visual center when multiple characters or objects appear
 - scene moment, framing, foreground depth if needed, camera/lens, lighting, color/texture, mood, realism, and anti-slop
+- the unified shot prompt-body order from `scene-shot-prompt-grammar.md`: shot type, subject/action, environment, fixed composition, immutable style keywords, concise limits
 - continuity inheritance from the scene master and character/prop assets
 - no contradiction with clean reference assets; a dramatic frame does not replace CHR/SCN/PRP asset truth
 
@@ -408,6 +411,7 @@ Before finalizing, verify:
 - Style requests are not left as abstract labels: prompts include `style_strength`, live-action or medium anchors, recurring visual motifs, and model-safe exclusions for concept art / game CG when relevant.
 - Prop prompts include 45° side view and back view.
 - Shot-frame prompts, when requested, are labeled as `SHOT-*` and reference existing CHR/CST/SCN/PRP IDs.
+- Stylized scene and shot prompts follow the unified prompt-body grammar without mixing QA notes, canvas metadata, or CLI plans into the model prompt.
 - Clean character and prop reference prompts are not polluted by cinematic background action, random foreground objects, or dramatic scene lighting.
 - Fuzzy cinematic style requests produce a LOOK CARD first unless the user explicitly asks to proceed automatically.
 - Named-look transfer preserves the user's script facts and only transfers camera, lens, light, color, texture, mood, and anti-slop behavior.

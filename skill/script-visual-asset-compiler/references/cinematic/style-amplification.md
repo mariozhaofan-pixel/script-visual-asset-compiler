@@ -82,6 +82,7 @@ Avoid: illustration, anime, game render, plastic CGI, over-beautified skin, extr
 
 For `SCN-*`, keep the scene empty but make the style visible through set construction:
 
+- compile the final prompt body with `scene-shot-prompt-grammar.md` when the user asks for stylized scene images, cinematic scene plates, or unified scene prompt format
 - use location plate / live-action set photography language
 - define foreground, midground, background, entrances/exits, and fixed anchors
 - specify practical materials and age: wet stone, worn jade, tarnished bronze, incense soot, carved wood, frost, silk, lacquer, paper
@@ -94,6 +95,8 @@ If the result looks like game CG or concept art, rerun with:
 ```text
 real location set photography, practical full-scale set, no digital matte painting, no concept art, no game environment, no UI panels, no readable glyphs, tactile weathered materials, natural lens perspective
 ```
+
+For scene and storyboard style references that use a structure like shot type, subject/action, environment, fixed composition, immutable style keywords, and negative keywords, preserve that order as a prompt-body grammar while keeping all existing asset IDs and continuity cards. Do not import sample subjects or example settings from the reference into the user's script.
 
 ## Visualizing Abstract Systems
 
