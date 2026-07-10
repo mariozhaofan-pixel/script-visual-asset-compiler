@@ -91,4 +91,10 @@ Copy-Item -Recurse -Force `
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+本项目受版权保护，并采用自定义受限使用许可。
+
+未经授权，不得再发布、镜像、二次打包、再授权、出售，或将本项目及其提示词、规则、工作流、文档、衍生内容用于商业产品、付费服务、SaaS、咨询交付、培训课程、市场上架或其他营利性用途。
+
+如需再发布授权、商业授权、合作或其他许可，请联系：微信 `MARIOZHAOFAN`。
+
+完整条款见 [LICENSE](LICENSE)。
