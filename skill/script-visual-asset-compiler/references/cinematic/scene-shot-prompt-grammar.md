@@ -14,7 +14,7 @@ Compile `SCN-*`, `SCN_VIEW-*`, and `SHOT-*` prompt bodies in this order:
    - for `SHOT-*`: one clear visual center plus character action or story beat.
 3. `ENVIRONMENT`: geography, time, weather, set zones, thresholds, foreground/midground/background, fixed anchors.
 4. `COMPOSITION RULES - fixed`: composition choices that must not drift: symmetry, one-point perspective, negative space, foreground obstruction, depth staging, frame-within-frame, leading lines, camera-parent relation.
-5. `IMMUTABLE STYLE KEYWORDS - highest weight`: the locked LOOK layer, style_strength, medium anchors, palette behavior, light behavior, material system, grain/texture, halation or haze if used.
+5. `IMMUTABLE STYLE KEYWORDS - highest weight`: the highest-priority real-light clause, locked LOOK layer, style_strength, medium anchors, palette behavior, light behavior, material system, grain/texture, halation or haze if used.
 6. `NEGATIVE / LIMITS`: concise exclusions targeted to the asset type and model.
 
 Do not put execution notes, canvas node data, rerun advice, or QA text inside this prompt body.
@@ -27,7 +27,7 @@ Use this skeleton for `SCN-*` and `SCN_VIEW-*`:
 <SCN-ID> <view name>, <shot type / camera view>, empty live-action location plate of <scene identity>, <environment and spatial state>.
 Composition fixed: <foreground/midground/background>, <entrances/exits/thresholds>, <fixed anchors>, <composition rule>, <camera position>.
 Continuity: inherit <SCN-ID_MASTER> spatial structure, materials, door/window positions, fixed anchors, light direction, weather, palette, and style; only camera position and visible area change.
-Immutable style keywords: style_strength=<base/elevated/signature>, live-action location plate, practical full-scale set, natural lens perspective, <LOOK layer>, <palette behavior>, <motivated light>, <material system>, <film/optical texture>.
+Immutable style keywords: highest-priority real-light clause, style_strength=<base/elevated/signature>, live-action location plate, practical full-scale set, natural lens perspective, one unified motivated light source, realistic shadows and highlights, clean noise-free dark areas, selective detail only with nonessential areas falling into shadow, <LOOK layer>, <palette behavior>, <material system>, <film/optical texture>.
 限制: 无人物, 无人影, 无群众, 无文字, 无水印, 无logo, 不出现角色, 不出现与时代/剧情无关的物件, 不改变场景固定锚点/门窗位置/光线方向/材质关系
 ```
 
@@ -41,7 +41,7 @@ Use this skeleton for `SHOT-*` and individual storyboard frames:
 <SHOT-ID>, 引用: <CHR/CST/SCN/PRP IDs>. <shot type> of <subject and action> in <environment>.
 Composition fixed: <camera angle>, <framing>, <foreground depth or obstruction>, <visual center>, <screen direction>, <relationship to SCN master>.
 Continuity: preserve <character identity/costume>, <prop form>, <scene anchors>, <light direction>, <time/weather>.
-Immutable style keywords: style_strength=<base/elevated/signature>, cinematic live-action film still, <camera/lens medium anchor>, <motivated light>, <palette behavior>, <material/skin/fabric realism>, <film/optical texture>, <mood>.
+Immutable style keywords: highest-priority real-light clause, style_strength=<base/elevated/signature>, cinematic live-action film still, <camera/lens medium anchor>, one unified motivated light source, real skin/material texture, realistic shadows and highlights, clean noise-free dark areas, selective detail only with nonessential areas falling into shadow, <palette behavior>, <film/optical texture>, <mood>.
 限制: 无文字, 无水印, 无logo, 不改变角色身份/服装/比例, 不改变场景锚点和道具形态
 ```
 
@@ -80,7 +80,7 @@ Use for intimate school, rural edge, urban edge, memory, emotional aftermath, or
 - minimal composition, negative space, low or eye-level observational camera
 - soft haze, restrained handheld feeling, gentle lens flare only when motivated
 - cyan-blue night or warm backlit day, muted desaturated palette
-- long soft shadows, quiet emotional distance, practical environment details
+- long soft shadows, quiet emotional distance, selective practical environment details with nonessential areas allowed to fall into shadow
 - avoid beauty-filter gloss, overdramatic fantasy glow, stock romance poster look
 
 ### Grounded Ancient Fantasy Portrait / Close Frame
@@ -99,6 +99,7 @@ Use mainly for character close-ups or shot frames, not empty scene plates.
 - Derived views repeat only the continuity anchors needed to preserve the master.
 - Strong foreground obstruction is allowed for `SHOT-*`; for `SCN-*`, use it only if the set remains readable.
 - Do not stack every optical effect. Use at most two strong softening signals from grain, haze, halation, bloom, soft focus, rain, shallow depth of field.
+- Do not force full detail visibility. Some corners, fabric folds, background zones, or facial planes may fall into clean shadow when the light source requires it.
 - If a style recipe's default subject conflicts with the script, transfer only camera, lens, light, color, texture, and composition behavior.
 
 ## Conflict Handling

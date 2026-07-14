@@ -19,8 +19,8 @@ them before final prompt assembly.
 | Specific film stock names such as `Kodak 500T`, `250D`, `Vision3` | Translate into visible color behavior, such as "tungsten-balanced warm color science with gentle highlight roll-off". Do not keep the stock model name. |
 | `film emulation`, `胶片模拟`, `胶片质感` | Omit, or fold into color science and highlight roll-off language. |
 | `grain / 颗粒` at fine level | Omit for image models unless grain is the signature of the look. If retained, describe it as extremely subtle. |
-| `underexposed`, `crushed blacks`, `欠曝`, `暗部厚重` | Rewrite as clean deep shadows: "dark areas are deep yet clean, with detail sinking into black without dirty noise". |
-| Clarity anchor | Use a pure-positive version: "clean transparent imaging, crisp optical detail, deep clean shadows". Avoid mentioning grain or halation inside the clarity sentence. |
+| `underexposed`, `crushed blacks`, `欠曝`, `暗部厚重` | Rewrite as clean deep shadows: "dark areas are deep and clean, with nonessential detail naturally sinking into black without dirty noise". |
+| Clarity anchor | Use a pure-positive version: "clean transparent imaging, selective crisp optical detail, deep clean shadows without lifting all shadow detail". Avoid mentioning grain or halation inside the clarity sentence. |
 
 Camera bodies such as Alexa 65, Alexa LF, VENICE 2, and Alexa Mini are not noise
 fuse terms. Keep the camera body as a realism anchor.
@@ -49,17 +49,17 @@ are removed.
 Always preserve cinematic tonal density:
 
 ```text
-完整影调范围，高光胶片式肩部柔和滚降，中间调厚实有密度、色彩浓郁不发灰，暗部浓黑有密度且细节沉入而非发灰上浮；画面有胶片负片般的厚度与体量感。
+真实影调范围，高光胶片式肩部柔和滚降，中间调厚实有密度、色彩浓郁不发灰，暗部浓黑有密度且非关键细节沉入黑位而非发灰上浮；画面有胶片负片般的厚度与体量感。
 ```
 
 English:
 
 ```text
-full tonal range with a gentle filmic highlight shoulder, dense weighted midtones with rich color density, deep blacks that hold detail and sit heavy rather than lifting into grey; the tactile density of a film negative.
+realistic tonal range with a gentle filmic highlight shoulder, dense weighted midtones with rich color density, deep blacks that keep only essential form information and sit heavy rather than lifting into grey; the tactile density of a film negative.
 ```
 
 Tonal density is not the same as simply making the image darker. Keep shadows deep
-and clean, with detail present inside the black.
+and clean, with only essential form information suggested inside the black.
 
 ## GPT Image Compression
 

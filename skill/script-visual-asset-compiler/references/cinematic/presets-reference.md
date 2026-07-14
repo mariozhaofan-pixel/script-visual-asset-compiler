@@ -186,7 +186,7 @@ User overrides replace individual values without affecting the rest.
 | foreground | smoke_haze | 大气薄雾/沙尘前景 |
 | camera | alexa_lf | 大画幅 |
 | lens | spherical_24 | 24mm 广角 |
-| aperture | T5.6 | 深景深保持壮阔环境清晰 |
+| aperture | T5.6 | 深景深保持壮阔空间关系清晰，非关键细节可沉入阴影 |
 | light_source | golden_hour | 黄金时刻 |
 | light_style | naturalistic | 自然主义 |
 | fill | no_fill | 保留深沉阴影 |
@@ -269,7 +269,7 @@ User overrides replace individual values without affecting the rest.
 | aperture | T1.4 | 极浅景深隔离恋人 |
 | light_source | practical_lamp | 画面内台灯/壁灯作动机光 |
 | light_style | chiaroscuro | 伦勃朗式明暗对比 |
-| fill | minimal | 极少补光，暗部仍有细节 |
+| fill | minimal | 极少补光，暗部干净，非关键细节沉入黑位 |
 | palette | warm_golden | 低饱和暖金 |
 | saturation | low | 低饱和 |
 | film_stock | kodak_500t | 500T 还原温暖肤色 |
@@ -324,7 +324,7 @@ User overrides replace individual values without affecting the rest.
 | foreground | smoke_haze | 浓雾/烟尘前景，增加纵深与大气 |
 | camera | alexa_lf | 大画幅 |
 | lens | spherical_24 | 24mm 广角，宏阔视野 |
-| aperture | T5.6 | 深景深保持壮阔环境清晰 |
+| aperture | T5.6 | 深景深保持壮阔空间关系清晰，非关键细节可沉入阴影 |
 | light_source | overcast | 厚云层均匀冷灰漫射光 |
 | light_style | naturalistic | 自然主义动机光 |
 | fill | no_fill | 保留深沉阴影 |
@@ -623,8 +623,8 @@ RGB LED变色温 + 极度贴近演员 + 直视镜头。
 **name**: "Kubrick 导演签名 (2001 / 发条橙 / 闪灵 / 全金属外壳 谱系)"
 **signature**: "斯坦利·库布里克导演语法 —— 冷酷的一点透视、灭点钉死在画面正中，
 对称被"武器化"为稳定却幽闭的不安；Zeiss 24mm 广角夸张纵深；走廊 Steadicam 纵深推移；
-明亮均匀的临床动机光；克制中性调 + 唯一一抹饱和"库布里克红"。本预设为**导演语法级**，
-区别于已有 barry_lyndon（纯烛光油画）。——一点透视对称，24mm 广角，走廊斯坦尼康，临床明亮"
+动机明确的临床亮面，真实阴影层次不被全局抹平；克制中性调 + 唯一一抹饱和"库布里克红"。本预设为**导演语法级**，
+区别于已有 barry_lyndon（纯烛光油画）。——一点透视对称，24mm 广角，走廊斯坦尼康，临床亮面但遵从真实光线"
 
 | Key | Value | Rationale |
 |-----|-------|-----------|
@@ -639,8 +639,8 @@ RGB LED变色温 + 极度贴近演员 + 直视镜头。
 | lens | spherical_24 | Zeiss 24mm 广角，夸张纵深推远背景（招牌镜） |
 | aperture | T4 | 深景深保持灭点几何线条锐利 |
 | light_source | practical_lamp | 画面内实用光源为动机 |
-| light_style | naturalistic | 动机光，但明亮均匀而非低调 noir |
-| fill | minimal | 保持均匀临床感，暗部仍有细节 |
+| light_style | naturalistic | 动机光，临床亮面但保留真实阴影层次，非低调 noir |
+| fill | minimal | 保持临床秩序感，暗部干净，非关键细节沉入黑位 |
 | palette | cool_neutral | 冷中性临床调（配 signature 红点） |
 | saturation | moderate | 克制，但让唯一红色点缀跳出 |
 | film_stock | none | 强调几何而非乳剂特性，画面干净 |

@@ -274,6 +274,14 @@ All prompts must be self-contained. Each prompt must name:
 - continuity anchors
 - negative constraints
 
+Highest-priority real-light clause:
+
+```text
+最高优先级: 真实肌肤质感, 真实光影效果和阴影高光, 统一光线来源, 遵从真实光线; 不要展示全部细节, 暗部干净无噪点, 让部分信息自然沉入阴影。
+```
+
+Use this clause for all cinematic character, scene, prop, creature, vehicle, and shot-frame prompts. For people, emphasize real skin pores, subtle imperfections, natural hair, and skin translucency. For non-human assets, apply the same rule as material realism, real shadow/highlight behavior, and a single motivated light source. Do not brighten every surface just to reveal details.
+
 Character asset prompts must include:
 
 - clean solid-color background
@@ -370,8 +378,9 @@ Final prompts should be complete but not bloated. Preserve guidance in this prio
 2. character identity / scene master anchors / prop form anchors
 3. view-specific camera position and what changed from the master view
 4. doorway, route, screen direction, or continuity constraints that would visibly break if omitted
-5. style, lighting, color, material, and atmosphere
-6. concise negative constraints
+5. the highest-priority real-light clause: real skin/material texture, unified motivated light source, realistic shadows/highlights, clean noiseless shadow falloff, and partial detail hidden in darkness
+6. style, lighting, color, material, and atmosphere
+7. concise negative constraints
 
 If a final prompt becomes too long, remove decorative adjectives and low-impact mood language before removing spatial anchors, ID locks, or reference roles.
 
@@ -420,6 +429,7 @@ Before finalizing, verify:
 - CLI execution is skipped unless the user explicitly requests canvas node creation/update and a safe executable plus command syntax are available.
 - No API keys, access tokens, or credential values are read, printed, modified, or written.
 - Prompts are clean, literal, and image-generation ready, not vague mood labels.
+- Prompts preserve the highest-priority real-light clause: real skin/material texture, one motivated light source, realistic shadow/highlight behavior, clean noiseless dark areas, and selective detail with natural shadow loss.
 - Reference-image roles and conflicts are explicit when references exist.
 - Guidance is prioritized, not bloated: preserve at most the highest-impact continuity constraints inside each final prompt.
 - No invented prop, costume, scene, or spatial relation is presented as script fact; assumptions are labeled.

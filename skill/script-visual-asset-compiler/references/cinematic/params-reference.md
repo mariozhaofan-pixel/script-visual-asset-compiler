@@ -14,7 +14,7 @@ If a token is empty string (`""`), skip it entirely — do not insert a blank.
 |----|-------|----------|----------|
 | establishing | 建立镜头 | 建立镜头，展示整体环境与时间氛围，人物极小或不可见 | establishing shot, full environment with atmosphere, subject barely visible |
 | extreme_wide | 大远景 | 大远景，人物在画面中极其渺小，被环境吞没 | extreme wide shot, subject dwarfed by environment |
-| wide | 远景 | 环境远景，人物在画面中占比很小，环境交代完整 | wide shot, subject small in frame, full environment context |
+| wide | 远景 | 环境远景，人物在画面中占比很小，空间关系交代完整但非关键细节可沉入阴影 | wide shot, subject small in frame, full spatial context with nonessential detail allowed to fall into shadow |
 | medium_wide | 中远景 | 中远景，人物膝部以上可见，可见肢体语言与环境关系 | medium wide shot, knees up, body language in context |
 | cowboy | 牛仔景 | 牛仔景，大腿中部以上取景，紧张对峙感 | cowboy shot, mid-thigh up, confrontational framing |
 | medium | 中景 | 中景，腰部以上，对话和互动的标准取景 | medium shot, waist up |
@@ -125,7 +125,7 @@ If a token is empty string (`""`), skip it entirely — do not insert a blank.
 | T2 | T2 | T2 光圈，浅景深 | T2, shallow depth of field |
 | T2.8 | T2.8 | T2.8 光圈，浅景深 | T2.8, shallow depth of field |
 | T4 | T4 | T4 光圈，中等景深 | T4, moderate depth of field |
-| T5.6 | T5.6 | T5.6 光圈，深景深保持环境清晰 | T5.6, deep focus |
+| T5.6 | T5.6 | T5.6 光圈，深景深保持空间关系清晰，但不强行照亮所有暗部细节 | T5.6, deep focus with readable spatial relationships while nonessential shadow detail falls into clean darkness |
 
 
 ---

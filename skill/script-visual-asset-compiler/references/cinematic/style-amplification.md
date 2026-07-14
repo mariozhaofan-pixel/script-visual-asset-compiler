@@ -31,6 +31,7 @@ When the user asks for 真人电影 or 影视风格, the prompt must include:
 - production design, costume department, prop department, makeup and hair realism
 - natural skin pores, real fabric weave, metal edge wear, jade/stone/wood surface imperfections
 - motivated light source and realistic falloff
+- one unified light source, realistic shadows/highlights, clean noise-free dark areas, and partial detail naturally falling into shadow instead of being globally brightened
 - low saturation or specified palette behavior
 
 Actively suppress the wrong medium:
@@ -73,7 +74,7 @@ Prompt skeleton:
 <CHR-ID> <name>, cinematic casting plate, full-body front view, one real actor only, <identity and temperament>.
 Costume: <CST-ID, silhouette, layers, construction, material, wear, symbolic motifs>.
 Style DNA: <palette>, <lighting>, <visual-system motif>, <project material system>.
-Medium: live-action fantasy drama still, practical costume department, real skin/hair/fabric/metal/jade texture, <camera/lens if useful>.
+Medium: live-action fantasy drama still, practical costume department, real skin/hair/fabric/metal/jade texture, one unified motivated light source, realistic shadows and highlights, clean noise-free dark areas, selective detail only with nonessential areas falling into shadow, <camera/lens if useful>.
 Background: low-key plain studio or minimal stage background, no readable text.
 Avoid: illustration, anime, game render, plastic CGI, over-beautified skin, extra people, watermark, logo, cropped feet.
 ```
@@ -87,6 +88,7 @@ For `SCN-*`, keep the scene empty but make the style visible through set constru
 - define foreground, midground, background, entrances/exits, and fixed anchors
 - specify practical materials and age: wet stone, worn jade, tarnished bronze, incense soot, carved wood, frost, silk, lacquer, paper
 - define a motivated light source: moonlight, overcast skylight, candle/fire, fluorescent-celestial lamps, reflected water-mirror light
+- keep one unified light source, realistic shadow/highlight behavior, clean noise-free dark areas, and allow nonessential set detail to fall into shadow
 - state the palette as behavior, not only color names
 - replace UI/text with abstract non-symbolic light, geometry, reflections, or spatial motifs
 
