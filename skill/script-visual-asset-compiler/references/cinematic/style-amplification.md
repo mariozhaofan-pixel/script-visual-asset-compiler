@@ -46,14 +46,16 @@ For scene plates, also suppress:
 no UI screens, no readable text, no floating labels, no game menu, no concept-art presentation board
 ```
 
-## Cinematic Casting Plate
+## Cinematic Costume Design / Casting Plate
 
-Use this route for `CHR-*` / `CST-*` when the user asks for styled front full-body images, 真人电影角色图, 定妆照, or a single character view.
+Use this route for `CHR-*` / `CST-*` when the user asks for styled服装设计图, 真人电影角色图, 定妆照, or a single character view.
+
+Default to a `CST-*` costume design sheet. Use a casting/front-view actor plate only when the user explicitly asks for actor views.
 
 Keep:
 
 - one character only
-- full-body front view or the exact requested view
+- costume design sheet layout or the exact requested view
 - stable identity, costume, body proportion, and ID
 - no extra characters, no readable text, no logos
 - low-key plain studio, minimal cyclorama, or simple atmospheric stage background
@@ -71,7 +73,7 @@ Do not turn a casting plate into an action frame. No fighting pose, dramatic sto
 Prompt skeleton:
 
 ```text
-<CHR-ID> <name>, cinematic casting plate, full-body front view, one real actor only, <identity and temperament>.
+<CST-ID> bound to <CHR-ID> <name>, cinematic costume design sheet, one real actor or neutral fit model only, front costume view + back costume view + material/accessory detail windows, <identity and temperament>.
 Costume: <CST-ID, silhouette, layers, construction, material, wear, symbolic motifs>.
 Style DNA: <palette>, <lighting>, <visual-system motif>, <project material system>.
 Medium: live-action fantasy drama still, practical costume department, real skin/hair/fabric/metal/jade texture, one unified motivated light source, realistic shadows and highlights, clean noise-free dark areas, selective detail only with nonessential areas falling into shadow, <camera/lens if useful>.
@@ -153,6 +155,6 @@ Before finalizing a prompt for a style-heavy request, check:
 - The medium is explicit: live-action film still / practical set / real actor / location plate.
 - At least three concrete style carriers are present.
 - Abstract systems are visualized as motifs, not labels.
-- Character casting plates are not mistaken for action shots.
+- Character costume/casting plates are not mistaken for action shots.
 - Scene plates remain empty and spatially readable.
 - Negative constraints target the actual failure mode: concept art, game render, plastic CGI, anime, readable text, UI pollution.

@@ -10,7 +10,7 @@ description: Extract production-ready visual asset plans, prompt documents, cine
 Turn a script into a reusable visual asset package. The user-facing skill name is `剧本资产提取器`; keep the technical skill ID as `$script-visual-asset-compiler` for Codex invocation compatibility.
 
 ```text
-Script -> Director breakdown -> Continuity memory graph -> Key subjects -> Prompt documents -> Optional canvas blueprint / CLI node payload -> Optional image generation
+Script -> Director intake / fact levels -> Director breakdown -> Continuity memory graph -> Key subjects -> Prompt documents -> Optional canvas blueprint / CLI node payload -> Optional image generation
 ```
 
 The default final output is Chinese, production-oriented, and ready for image generation. Do not only summarize the plot. Extract a stable visual system that can generate consistent character, costume, scene, prop, creature, vehicle, color/material DNA, storyboard, video-segment, and optional cinematic frame images across later storyboard or video work.
@@ -32,6 +32,10 @@ Read only the files needed for the current task:
 | `references/cinematic/recipes-reference.md` | When the style request is fuzzy and no exact preset is available. |
 | `references/cinematic/anti-slop-system.md` | When adding realism, anti-slop, or model-aware negative/positive constraints. |
 | `references/cinematic/model-adapters.md` | When the user names GPT Image, Midjourney, Flux, SDXL, or another still-image model. |
+| `references/production/director-intake-and-creative-baseline.md` | When the user wants deep director analysis, project bible, fact-level separation, creative baseline, film reference, sound/music bible, or stronger preproduction logic before asset prompts. |
+| `references/production/emotion-curve.md` | When the user asks for emotional curve, rhythm map, tension graph, act-level intensity, or a director overview image/prompt before asset production. |
+| `references/production/character-costume-workflow.md` | When extracting characters, costume states, dependency batches, character/creature state gates, or the default costume design sheet prompts. |
+| `references/production/prop-dossier-mode.md` | When filtering key prop candidates, compiling key prop dossiers, or choosing between default 45°/back prop views and a single product-dossier prompt. |
 | `references/production/asset-taxonomy-and-profiles.md` | When extracting creatures, vehicles, color/material DNA, storyboards, video segments, priorities, project profiles, or broad asset maps. |
 | `references/production/prompt-document-compiler.md` | When the user wants industrial prompt documents, node-ready prompt docs, QA notes, rerun fixes, or versioned prompt packages. |
 | `references/production/codex-image-generation.md` | When running local Codex image generation from compiled prompts, especially with `image_gen.py`, `gpt-image-2`, 4K PNG output, or ID-mapped image files. |
@@ -54,9 +58,9 @@ Do not ask clarifying questions unless missing information would materially chan
 
 ## Source-of-Truth Model
 
-Keep four layers separate:
+Keep these layers separate:
 
-1. `Base Truth`: script facts, confirmed references, user constraints, and stable asset IDs.
+1. `Base Truth`: script facts, confirmed references, user constraints, fact levels, and stable asset IDs.
 2. `Continuity Context`: adjacent scenes, recurring locations, portals, screen direction, style lock, previous generated assets, and reference-image roles.
 3. `Derived Prompts`: per-asset and per-view image prompts derived from Base Truth plus Continuity Context.
 4. `Cinematic LOOK Layer`: optional camera, lens, light, color, texture, mood, realism, and anti-slop treatment. It can enrich prompts but never override Base Truth.
@@ -66,24 +70,34 @@ Keep four layers separate:
 
 Do not let generated images silently rewrite Base Truth. If a generated asset contradicts the script, mark it as a candidate that needs acceptance, revision, or rejection.
 
+Use fact levels when the script is long, ambiguous, style-sensitive, or intended for serious production:
+
+- `剧本事实`: explicitly stated in the source.
+- `强推断`: supported by multiple source clues; state the basis.
+- `导演提案`: necessary production specificity not written in the source; offer one best-fit option.
+- `待定冲突`: a blocking choice that would materially change assets, continuity, or story meaning.
+
+Never present a director proposal as script fact. Once the user confirms a proposal, it becomes project truth for downstream prompts.
+
 ## Workflow
 
 1. Read the script for story function, not just nouns. Identify who changes, where action happens, and which objects move the plot.
-2. Build a director breakdown:
+2. If the task needs a deep production pass, read `references/production/director-intake-and-creative-baseline.md` and establish fact levels, project bible, creative baseline, and optional sound/music principles before writing final asset prompts.
+3. Build a director breakdown:
    - premise and genre
    - time period and world rules
    - scene geography and recurring locations
    - character power relationships and visual contrast
    - recurring motifs, prop logic, and reveal moments
-3. Build a compact storyboard map:
+4. Build a compact storyboard map:
    - scene order and story beats
    - which characters, costumes, locations, props, and scene states appear in each beat
    - what must stay visually consistent across beats
-4. Build a continuity memory graph:
+5. Build a continuity memory graph:
    - characters, costumes, scenes, props, and their stable IDs
    - scene zones, entrances, exits, doors, windows, hallways, stairs, vehicles, counters, beds, tables, altars, screens, or other fixed landmarks
    - screen-left/screen-right axis, movement direction, doorway direction, and camera-parent relationships when a scene needs multiple views
-5. Extract key subjects into stable IDs:
+6. Extract key subjects into stable IDs:
    - `CHR-01` characters
    - `CST-01` costumes or costume states when one character has multiple looks
    - `CRE-01` creatures, monsters, animals, mechanical beasts, mounts, mutated life, or non-human entities
@@ -95,21 +109,22 @@ Do not let generated images silently rewrite Base Truth. If a generated asset co
    - `STB-01` storyboard grids or sequence boards
    - `VID-01` video segment plans only when video prompting is requested
    - `SHOT-01_FRAME-01` cinematic keyframes only when the user requests frames with characters, posters, or storyboard stills
-6. Decide the output mode:
+7. Decide dependencies and confirmation gates. For complex projects, read `references/production/character-costume-workflow.md` and do not produce downstream costume/state prompts before required upstream identities or accepted references exist.
+8. Decide the output mode:
    - prompt-only for Codex/GPT chat
    - production prompt documents
    - canvas blueprint only
    - CLI command plan
    - execute an already available canvas CLI only when explicitly requested
-7. Decide the cinematic treatment:
+9. Decide the cinematic treatment:
    - clean asset reference only
-   - cinematic casting plate / 真人电影定妆照 when the user wants styled full-body character images
+   - cinematic costume design plate / 真人电影服装设计图 when the user wants styled character costume assets
    - scene plate with cinematic LOOK
    - full cinematic frame prompt
    - LOOK CARD first because the style request is fuzzy
    - LOOK transfer from a named preset/style
-8. Write image-generation prompts or prompt documents for each subject. Each prompt must be usable without reading the whole script.
-9. If the user asks to generate images or create canvas nodes, execute in dependency order: project profile / DNA, character identity/costume, creatures/vehicles/props, scene master plates, derived scene views, storyboard/keyframes, video segments.
+10. Write image-generation prompts or prompt documents for each subject. Each prompt must be usable without reading the whole script.
+11. If the user asks to generate images or create canvas nodes, execute in dependency order: project profile / DNA, character identity text and costume design plates, creatures/vehicles/props, scene master plates, derived scene views, storyboard/keyframes, video segments.
 
 ## Extraction Rules
 
@@ -119,6 +134,7 @@ Characters:
 - Include visible age range, body type, facial features, hair, expression baseline, posture, social class, and visual temperament only when supported by the script or required for generation.
 - Include every costume state that matters to continuity: everyday outfit, uniform, disguise, damaged state, ceremonial outfit, wet/bloody/dusty state, etc.
 - Keep identity separate from clothing so a character can be reused with multiple costumes.
+- Default image deliverable is a `CST-*` costume design sheet, not character three-view output. Keep `CHR-*` as the identity and performance lock; bind each generated clothing asset to one `CST-*`.
 
 Scenes:
 
@@ -149,7 +165,7 @@ Cinematic style is a derived prompt layer. It must improve image quality without
 Use `references/cinematic/integration-rules.md` when deciding how much cinematic treatment to apply. In short:
 
 - Character and costume reference assets stay on a clean solid-color background by default. Add realistic skin, hair, textile, material, and optical clarity, but do not add film sets, smoke, random foreground, dramatic action, or lens flare.
-- If the user asks for 真人电影, 影视风格, 风格化, 定妆照, 正面全身图, or says the character image is not stylized enough, read `references/cinematic/style-amplification.md` and compile a cinematic casting plate instead of a plain reference sheet.
+- If the user asks for 真人电影, 影视风格, 风格化, 定妆照, 正面全身图, 服装设计图, or says the character image is not stylized enough, read `references/cinematic/style-amplification.md` and `references/production/character-costume-workflow.md`; compile a cinematic costume design plate unless the user explicitly requests an actor/casting portrait.
 - Prop reference assets stay on a clean solid-color background. Add material fidelity, wear, construction details, and scale logic, but do not add hands or scene environments.
 - Scene assets can use full cinematic LOOK treatment because they are environment plates. They must still be empty, geographically readable, and consistent across derived views.
 - Shot frames can use the full cinematic still-image layer only when the user requests character-containing frames, posters, keyframes, or storyboard images. Label them as `SHOT-*`, not `SCN-*`.
@@ -284,16 +300,16 @@ Use this clause for all cinematic character, scene, prop, creature, vehicle, and
 
 Character asset prompts must include:
 
-- clean solid-color background
-- full-body front view for `正视图`
-- full-body back view for `背视图`
-- head-and-shoulders portrait for `大头照`
-- neutral standing pose unless the user requests acting poses
-- same identity, same costume, same proportions across all views
-- costume-state ID such as `CST-01` when a character has multiple required looks; create one front/back/head prompt set per required costume state
+- clean solid-color or seamless studio background
+- one `服装设计图 / Costume Design Sheet` prompt for each required `CST-*` costume state
+- the linked `CHR-*` identity text lock: age range, body proportion, posture, social class, temperament, and hair/face constraints only as needed to preserve costume fit and continuity
+- a default sheet layout that prioritizes clothing information: front outfit view, back outfit view, key fabric/trim/accessory details, silhouette notes, and material behavior in one image
+- no mandatory character three-view set, no mandatory headshot, and no full acting pose unless the user explicitly asks for them
+- same identity, same body proportions, same costume, and same left/right asymmetric anchors across all panels/views in the sheet
+- costume-state ID such as `CST-01`; create one costume design prompt per required costume state
 - no extra characters, no text, no watermark, no logo
 
-If the user explicitly asks for only one character view, such as "只要正面全身图", output only that requested view and keep the ID/view name stable. If the user asks for 真人电影 / 影视风格, use a cinematic casting plate: single actor, full body, front-facing, low-key plain studio or minimal stage background, practical costume construction, real skin/hair/fabric/metal texture, and visible project visual DNA.
+If the user explicitly asks for actor views, casting plates, front view, back view, headshot, or three-view output, output only the requested views and keep the ID/view name stable. If the user asks for 真人电影 / 影视风格, use a cinematic costume design plate by default: one real actor or neutral fit model only when needed for clothing fit, full-scale practical costume construction, real skin/hair/fabric/metal/jade/leather texture, low-key clean studio background, visible project visual DNA in costume seams, embroidery, wear, accessories, or material contrast.
 
 Scene asset prompts must include:
 
@@ -394,11 +410,11 @@ If the user asks to generate images:
 4. For Codex 4K portrait PNG generation with an available `image_gen.py`, default to model `gpt-image-2`, size `2160x3840`, quality `high`, output format `png`, and ID-based output paths under `output/imagegen/`.
 5. Do not add Codex image-generation commands to GPT Builder behavior. GPT versions should output asset prompts, prompt documents, and optional canvas blueprints, not local execution commands.
 6. Use dependency order:
-   - character identity and costume plates
+   - character identity text locks and `CST-*` costume design plates
    - `SCN-xx_MASTER` scene master plate
    - derived scene views using the master as reference when possible
    - prop views
-7. Keep each generated image mapped to its ID and view name, for example `CHR-01_front`, `CHR-01_back`, `CHR-01_head`, `SCN-01_MASTER`, `SCN-01_VIEW-03_INSIDE_TO_OUT`, `SCN-01_VIEW-04_OUTSIDE_TO_IN`, `PRP-01_45deg`, `PRP-01_back`.
+7. Keep each generated image mapped to its ID and view name, for example `CST-01_design`, `SCN-01_MASTER`, `SCN-01_VIEW-03_INSIDE_TO_OUT`, `SCN-01_VIEW-04_OUTSIDE_TO_IN`, `PRP-01_45deg`, `PRP-01_back`. Use `CHR-01_front`, `CHR-01_back`, or `CHR-01_head` only when the user explicitly asks for those actor views.
 8. If an image-generation tool supports reference images, use character references for identity only, costume references for clothing only, scene references for environment/geometry only, and prop references for object form only.
 9. After generation, report the output paths or visible images with the ID map.
 
@@ -415,7 +431,7 @@ Before finalizing, verify:
 - Characters, costumes, scenes, scene views, and props have stable IDs and cross-reference the storyboard map.
 - Creatures, vehicles, color/material DNA, storyboard grids, and video segments are included when story-relevant or requested.
 - Cinematic LOOK choices are treated as derived prompt layers, not script facts.
-- Character prompts include front view, back view, and headshot.
+- Character/costume prompts include `CST-*` costume design sheets by default; actor front/back/headshot views appear only when explicitly requested.
 - Scene prompts are no-people location plates; master and derived views do not contradict each other.
 - Style requests are not left as abstract labels: prompts include `style_strength`, live-action or medium anchors, recurring visual motifs, and model-safe exclusions for concept art / game CG when relevant.
 - Prop prompts include 45° side view and back view.

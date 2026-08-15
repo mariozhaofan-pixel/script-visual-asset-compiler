@@ -72,15 +72,15 @@ Prompt body order:
 
 ## Asset Template Surfaces
 
-### Character Reference
+### Character / Costume Design Sheet
 
-Use this when the user wants a production character sheet rather than the default separate front/back/head prompts.
+Use this as the default character-asset surface. `CHR-*` is the identity lock; `CST-*` is the generated costume design sheet.
 
-- Aspect: 9:16.
-- Layout: 2x2 uneven grid.
-- Views: front face close-up, side face close-up, body front without face, full back including back of head.
-- Requirement: same person, same outfit, same proportions, same lighting.
-- Keep this as an optional sheet format; the default skill output still supports separate front, back, and headshot prompts.
+- Aspect: 16:9 or 4:5 unless the user specifies another ratio.
+- Layout: one sheet with front costume view, back costume view, and 2-4 detail windows for fabric, trim, accessories, shoes, armor, dirt, damage, or symbolic motifs.
+- Views: prioritize clothing information; use a faceless neutral model, neck-down front view, or full actor only when identity fit matters.
+- Requirement: same body proportions, same costume state, same left/right asymmetric anchors, same lighting.
+- Optional actor front/back/headshot views are generated only when the user explicitly requests them.
 
 ### Creature / Mechanical Beast
 

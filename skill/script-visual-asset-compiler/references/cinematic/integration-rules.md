@@ -11,15 +11,16 @@ Keep the script asset inventory as the source of truth. Cinematic style is a der
 Default route: clean reference plate.
 
 - Keep clean solid-color background.
-- Keep front view, back view, and headshot requirements unless the user asks for a subset.
-- Keep neutral pose unless the user asks for acting poses.
+- Use `CST-*` costume design sheets by default: front costume view, back costume view, and important clothing/material/detail windows in one controlled image.
+- Keep `CHR-*` as the identity and performance lock; generate actor front/back/headshot views only when explicitly requested.
+- Keep neutral pose or neutral fit-model stance unless the user asks for acting poses.
 - Add skin, hair, textile, leather, metal, dirt, wetness, damage, and optical clarity anchors.
 - Do not add cinematic sets, foreground objects, dramatic shadows, lens flares, smoke, rain, or story action unless the user asks for a character poster or frame.
 - Use only anti-slop Tier A plus model adaptation.
 
-Styled route: cinematic casting plate. Use `style-amplification.md` when the user asks for 真人电影, 影视风格, 定妆照, 角色正面全身图, 风格化, 玄幻, low-saturation fantasy, or says the character output is not stylized enough.
+Styled route: cinematic costume design plate, with optional casting plate only on request. Use `style-amplification.md` when the user asks for 真人电影, 影视风格, 定妆照, 服装设计图, 角色正面全身图, 风格化, 玄幻, low-saturation fantasy, or says the character output is not stylized enough.
 
-- Keep one character only, the requested view, identity lock, costume lock, and no readable text.
+- Keep one character/costume asset only, the requested view or costume-sheet layout, identity lock, costume lock, and no readable text.
 - Use live-action actor language, practical costume department, real makeup/hair/skin/fabric/metal/jade textures, and a low-key plain studio or minimal stage background.
 - Allow cinematic lighting, palette, subtle ground shadow, and visible project DNA in costume cut, halo, jewelry, embroidery, aura, or material motifs.
 - Do not add story action, fighting poses, crowd, unrelated props, or full scene blocking unless the user asks for `SHOT-*`.

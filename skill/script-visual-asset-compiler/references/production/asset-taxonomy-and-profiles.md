@@ -8,8 +8,8 @@ Use stable IDs. Prefer the hyphen style used by this skill; accept underscore ID
 
 | Asset | ID | Purpose | Default priority | Prompt surface |
 |---|---|---|---|---|
-| Character | `CHR-01` | named or important people, roles, extras with continuity value | P0/P1 | identity, costume states, front/back/head |
-| Costume State | `CST-01` | reusable clothing or state for a character | P0/P1 | clean costume-locked views |
+| Character | `CHR-01` | named or important people, roles, extras with continuity value | P0/P1 | identity lock, performance baseline, dependencies |
+| Costume State | `CST-01` | reusable clothing or state for a character | P0/P1 | costume design sheet, optional actor views only on request |
 | Creature | `CRE-01` | monster, animal, mechanical beast, mount, mutated life, non-human entity | P0/P1 | multi-view design sheet |
 | Scene / Environment | `SCN-01` | reusable spatial location, set, room, street, battlefield, interior/exterior | P0/P1 | master plate and derived views |
 | Prop | `PRP-01` | plot object, weapon, clue, device, token, product, ritual object | P1/P2 | 45-degree side and back, optional detail |
@@ -40,11 +40,14 @@ template_surface:
 required_views:
 aspect_ratio:
 dependencies:
+fact_level:
 prompt_status: draft
 qa_risk:
 ```
 
 Dependencies matter. For example, `SHOT-01_FRAME-01` should reference `CHR-*`, `CST-*`, `SCN-*`, and `PRP-*` instead of restating new facts.
+
+Use `CHR-*` for identity truth and `CST-*` for generated costume assets. By default, create `CST-*` costume design sheets rather than `CHR-*` front/back/headshot images. Use optional `CHR-xx_FRONT`, `CHR-xx_BACK`, or `CHR-xx_HEAD` only when the user explicitly asks for actor/casting views.
 
 ## Project Profile
 

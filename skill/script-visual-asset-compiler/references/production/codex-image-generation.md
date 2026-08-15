@@ -51,9 +51,7 @@ Use `2160x3840` as the default 9:16 4K portrait size when the user asks for 4K v
 Create deterministic, ID-mapped paths under `output/imagegen/`:
 
 ```text
-output/imagegen/CHR-01_front.png
-output/imagegen/CHR-01_back.png
-output/imagegen/CHR-01_head.png
+output/imagegen/CST-01_design.png
 output/imagegen/SCN-01_MASTER.png
 output/imagegen/SCN-01_VIEW-03_INSIDE_TO_OUT.png
 output/imagegen/SCN-01_VIEW-04_OUTSIDE_TO_IN.png
@@ -68,7 +66,7 @@ Keep file names ASCII-safe when possible. Preserve the asset ID and view name ev
 Generate in dependency order:
 
 1. `DNA-*` visual DNA or palette lock, if requested.
-2. `CHR-*` identity plates and `CST-*` costume plates.
+2. `CHR-*` identity text locks and `CST-*` costume design plates.
 3. `CRE-*` creatures and `VEH-*` vehicles when present.
 4. `SCN-xx_MASTER` scene master plates.
 5. `SCN-xx_VIEW-*` derived scene views, using the accepted master scene plate as geometry/style reference when the tool supports references.
@@ -87,7 +85,7 @@ Before running a command, compress the prompt to the final image-generator text:
 
 - Start with asset ID, subject, and view.
 - Preserve identity, costume, scene anchors, prop form anchors, and spatial continuity constraints.
-- Include clean-background constraints for character, costume, creature, vehicle, and prop reference plates.
+- Include clean-background constraints for costume, optional character actor views, creature, vehicle, and prop reference plates.
 - Include no-people constraints for `SCN-*` location plates.
 - Omit production notes, markdown headings, analysis, and canvas node metadata.
 - Escape quotes or use shell-safe quoting so the command passes the full prompt unchanged.
@@ -99,7 +97,7 @@ If a prompt is too long for reliable shell execution, shorten decorative languag
 After generation, report only the useful result map:
 
 ```text
-CHR-01_front -> output/imagegen/CHR-01_front.png
+CST-01_design -> output/imagegen/CST-01_design.png
 SCN-01_MASTER -> output/imagegen/SCN-01_MASTER.png
 PRP-01_45deg -> output/imagegen/PRP-01_45deg.png
 ```
